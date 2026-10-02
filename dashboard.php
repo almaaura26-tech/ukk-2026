@@ -14,8 +14,8 @@ include 'includes/cek_session.php';
 
         <ul>
             <?php if($_SESSION['role'] == 'admin'){ ?>
-        <li><a href="menu1.php">menu 1</a></li>
-        <li><a href="menu2.php">menu 2</a></li>
+        <li><a href="kelola_guru.php">kelola_guru</a></li>
+        <li><a href="kelola_siswa.php">kelola_siswa</a></li>
         <li><a href="menu3.php">menu 3</a></li>
         <li><a href="menu4.php">menu 4</a></li>
     <?php } ?>

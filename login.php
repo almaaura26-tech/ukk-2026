@@ -17,12 +17,12 @@
             <form action="proses_login.php" method="POST">
                 <table>
                     <tr>
-                    <td>email</td>
+                    <td>Email</td>
                     <td>:</td>
                     <td><input type="text" name="email" required></td>
 </tr>
 <tr>
-                    <td>password</td>
+                    <td>Password</td>
                         <td>:</td>
                         <td><input type="password" name="password" required></td>
 </tr>
