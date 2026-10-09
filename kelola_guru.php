@@ -8,10 +8,10 @@ $hasil = mysqli_query($koneksi, $sql);
 ?>
 <!DOCTYPE html>
 <html>
-    <head><title>Kelola Siswa - Sistem Pelanggaran Siswa</title></head>
+    <head><title>Kelola Guru - Sistem Pelanggaran Guru</title></head>
     <body>
-        <h1>Kelola Siswa</h1>
-        <p><a href="dashboard.php">Kembali ke Dashboard</a> | <a href="tambah_siswa.php">Tambah Siswa</a></p>
+        <h1>Kelola Guru</h1>
+        <p><a href="dashboard.php">Kembali ke Dashboard</a> | <a href="tambah_siswa.php">Tambah Guru</a></p>
         <table border="1" cellpadding="6">
             <tr>
         
