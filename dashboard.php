@@ -1,6 +1,4 @@
 
-
-
 <?php
 //dashboard.php
 include 'includes/cek_session.php';
@@ -66,6 +64,11 @@ include 'includes/cek_session.php';
                         kelola pelanggaran kategori
                     </a>
 
+                    <li class="nav-item mb-2">
+                    <a href="aboutme.php" class="nav-link text-white">
+                        About me
+                    </a>
+
                 </li>
                 <hr class="text-secondary">
                 <li class="nav-item">
@@ -83,8 +86,9 @@ include 'includes/cek_session.php';
             </p>
             <div class="row">
                 <!-- CARD DATA SISWA -->
-                <div class="col-md-4 mb-3">
+                <div class="col-md-3">
                     <div class="card shadow-sm">
+                        <div class="card bg-success text-white h-100">
                         <div class="card-body">
                             <h5 class="card-title">
                                 Data Siswa
@@ -96,8 +100,9 @@ include 'includes/cek_session.php';
                     </div>
                 </div>
                 <!-- CARD DATA GURU -->
-                <div class="col-md-4 mb-3">
+                <div class="col-md-5">
                     <div class="card shadow-sm">
+                        <div class="card bg-warning text-dark">
                         <div class="card-body">
                             <h5 class="card-title">
                                 Data Guru
@@ -109,8 +114,9 @@ include 'includes/cek_session.php';
                     </div>
                 </div>
                 <!-- CARD KELAS -->
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4">
                     <div class="card shadow-sm">
+                        <div class="card bg-primary text-white">
                         <div class="card-body">
                             <h5 class="card-title">
                                 Kelas
@@ -161,6 +167,7 @@ include 'includes/cek_session.php';
         <li><a href="kelola_wali_kelas.php">kelola wali kelas</a></li>
         <li><a href="kelola_pelanggaran_kategori.php">kelola pelanggaran kategori</a></li>
         <li><a href="penempatan_siswa.php">penempatan siswa</a></li>
+        <li><a href="aboutme.php">About me/a></li>
     <?php } ?>
 
         <?php if ($_SESSION['role'] == 'guru'){ ?>

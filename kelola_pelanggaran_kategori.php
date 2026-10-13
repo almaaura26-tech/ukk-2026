@@ -134,12 +134,12 @@ $hasil = mysqli_query($koneksi, $sql);
 
             <td>
                 <a href="edit_pelanggaran_kategori.php?id=<?php echo $row['id']; ?>">
-                    Edit
+                   <button type="button" class="btn btn-primary">Edit</button>
                 </a>
                 |
                 <a href="hapus_pelanggaran_kategori.php?id=<?php echo $row['id']; ?>"
                    onclick="return confirm('Yakin ingin menghapus kategori pelanggaran ini?');">
-                    Hapus
+                    <button type="button" class="btn btn-danger">Hapus</button>
                 </a>
             </td>
         </tr>
