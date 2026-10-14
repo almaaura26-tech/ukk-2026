@@ -34,7 +34,7 @@ $hasil = mysqli_query($koneksi, $sql);
             </h4>
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item mb-2">
-                    <a href="#" class="nav-link active">
+                    <a href="dashboard.php" class="nav-link text-white">
                         Dashboard
                     </a>
                 </li>
@@ -59,7 +59,7 @@ $hasil = mysqli_query($koneksi, $sql);
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="kelola_wali_kelas.php" class="nav-link text-white">
+                    <a href="kelola_wali_kelas.php" class="nav-link active">
                         kelola wali kelas
                     </a>
 
@@ -74,6 +74,11 @@ $hasil = mysqli_query($koneksi, $sql);
                         kelola pelanggaran kategori
                     </a>
 
+                    <li class="nav-item mb-2">
+                    <a href="aboutme.php" class="nav-link text-white">
+                        About me
+                    </a>
+                    
                 </li>
                 <hr class="text-secondary">
                 <li class="nav-item">
