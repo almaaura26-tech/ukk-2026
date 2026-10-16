@@ -1,36 +1,127 @@
 <?php
-// proses_edit_siswa.php
+// edit_siswa.php
 include 'includes/cek_session.php';
 include 'config/koneksi.php';
 
-$id = $_POST['id'];
-$nis = $_POST['nis'];
-$nisn = $_POST['nisn'];
-$nama = $_POST['nama'];
-$jenis_kelamin = $_POST['jenis_kelamin'];
-$tanggal_lahir = $_POST['tanggal_lahir'];
-$alamat = $_POST['alamat'];
-$status_aktif = $_POST['status_aktif'];
+$id = $_GET['id'];
 
-$sql = "UPDATE t_siswa SET
-        nis = '$nis',
-        nisn = '$nisn',
-        nama = '$nama',
-        jenis_kelamin = '$jenis_kelamin',
-        tanggal_lahir = '$tanggal_lahir',
-        alamat = '$alamat',
-        status_aktif = '$status_aktif',
-        updated_at = CURRENT_TIMESTAMP
-        WHERE id = '$id'";
-
-if (mysqli_query($koneksi, $sql)) {
-
-    header("Location: kelola_siswa.php");
-    exit;
-
-} else {
-
-    echo "Gagal mengubah data siswa: " . mysqli_error($koneksi);
-
-}
+$sql = "SELECT * FROM t_siswa WHERE id = '$id'";
+$hasil = mysqli_query($koneksi, $sql);
+$data = mysqli_fetch_assoc($hasil);
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Siswa</title>
+</head>
+
+<body>
+
+    <h1>Edit Siswa</h1>
+
+    <form action="proses_edit_siswa.php" method="POST">
+
+        <input type="hidden" name="id" value="<?php echo $data['id']; ?>">
+
+        <table>
+
+            <tr>
+                <td>ID</td>
+                <td>:</td>
+                <td>
+                    <input type="text" name="id"
+                        value="<?php echo $data['id']; ?>" required>
+                </td>
+            </tr>
+
+            <tr>
+                <td>NIS</td>
+                <td>:</td>
+                <td>
+                    <input type="text" name="nis"
+                        value="<?php echo $data['nis']; ?>" required>
+                </td>
+            </tr>
+
+            <tr>
+                <td>NISN</td>
+                <td>:</td>
+                <td>
+                    <input type="text" name="nisn"
+                        value="<?php echo $data['nisn']; ?>" required>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Nama</td>
+                <td>:</td>
+                <td>
+                    <input type="text" name="nama"
+                        value="<?php echo $data['nama']; ?>" required>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Jenis Kelamin</td>
+                <td>:</td>
+                <td>
+                    <input type="text" name="jenis_kelamin"
+                        value="<?php echo $data['jenis_kelamin']; ?>" required>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Tanggal Lahir</td>
+                <td>:</td>
+                <td>
+                    <input type="text" name="tanggal_lahir"
+                        value="<?php echo $data['tanggal_lahir']; ?>" required>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Alamat</td>
+                <td>:</td>
+                <td>
+                    <input type="text" name="alamat"
+                        value="<?php echo $data['alamat']; ?>" required>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Status Aktif</td>
+                <td>:</td>
+                <td>
+                    <select name="status_aktif" required>
+
+                        <option value="1"
+                            <?php if ($data['status_aktif'] == 1) echo 'selected'; ?>>
+                            Aktif
+                        </option>
+
+                        <option value="0"
+                            <?php if ($data['status_aktif'] == 0) echo 'selected'; ?>>
+                            Tidak Aktif
+                        </option>
+
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="3">
+                    <input type="submit" value="Update">
+                </td>
+            </tr>
+
+        </table>
+
+    </form>
+
+    <p>
+        <a href="kelola_siswa.php">Kembali ke Kelola Siswa</a>
+    </p>
+
+</body>
+</html>

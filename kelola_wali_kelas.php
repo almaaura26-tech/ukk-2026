@@ -27,67 +27,6 @@ $hasil = mysqli_query($koneksi, $sql);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <div class="container-fluid">
     <div class="row">
-        <!-- SIDEBAR -->
-        <div class="col-md-3 col-lg-2 bg-dark min-vh-100 p-3">
-            <h4 class="text-white mb-4">
-                My Website
-            </h4>
-            <ul class="nav nav-pills flex-column">
-                <li class="nav-item mb-2">
-                    <a href="dashboard.php" class="nav-link text-white">
-                        Dashboard
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a href="kelola_siswa.php" class="nav-link text-white">
-                        kelola siswa
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a href="kelola_guru.php" class="nav-link text-white">
-                        kelola guru
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a href="kelola_kelas.php" class="nav-link text-white">
-                        kelola kelas
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a href="kelola_tahun_ajaran.php" class="nav-link text-white">
-                        kelola tahun ajaran
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a href="kelola_wali_kelas.php" class="nav-link active">
-                        kelola wali kelas
-                    </a>
-
-                    </li>
-                <li class="nav-item mb-2">
-                    <a href="penempatan_siswa.php" class="nav-link text-white">
-                        penempatan siswa
-                    </a>
-                    </li>
-                <li class="nav-item mb-2">
-                    <a href="kelola_pelanggaran_kategori.php" class="nav-link text-white">
-                        kelola pelanggaran kategori
-                    </a>
-
-                    <li class="nav-item mb-2">
-                    <a href="aboutme.php" class="nav-link text-white">
-                        About me
-                    </a>
-                    
-                </li>
-                <hr class="text-secondary">
-                <li class="nav-item">
-                    <a href="#" class="nav-link text-danger">
-                        Logout
-                    </a>
-                </li>
-            </ul>
-        </div>
         <!-- KONTEN -->
         <main class="col-md-9 col-lg-10 p-4">
 <h1>Kelola Wali Kelas</h1>
@@ -121,16 +60,15 @@ $hasil = mysqli_query($koneksi, $sql);
             <?php echo $row['status_aktif'] == 1
                 ? 'Aktif' : 'Tidak Aktif'; ?>
         </td>
-        <td>
-            <a href="edit_wali_kelas.php?id=<?php echo $row['id']; ?>">
-                Edit
-            </a>
-            |
-            <a href="hapus_wali_kelas.php?id=<?php echo $row['id']; ?>"
-               onclick="return confirm('Yakin ingin menghapus data wali kelas ini?');">
-                Hapus
-            </a>
-        </td>
+     <td>
+                <a href="edit_kelas.php?id=<?php echo $row['id']; ?>">
+                     <button type="button" class="btn btn-primary">Edit</button>
+                <a href="hapus_kelas.php?id=<?php echo $row['id']; ?>"
+                   onclick="return confirm('Yakin ingin menghapus data kelas ini?');">
+                    <button type="button" class="btn btn-danger">Hapus</button>
+                </a>
+            </td>
+
     </tr>
     <?php } ?>
 </table>

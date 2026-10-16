@@ -11,6 +11,13 @@ $hobi = "Mendengarkan Musik";
 $cita_cita = "POLWAN";
 ?>
 
+<div class="media">
+  <img class="mr-3" src="img/shawn.jpg" alt="Generic placeholder image">
+  <div class="media-body">
+    <h5 class="mt-0">Alma Aura Livia</h5>
+  </div>
+</div>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -18,17 +25,15 @@ $cita_cita = "POLWAN";
     <title>Tentang Saya</title>
 </head>
 <body>
-
-    <h2>Tentang Saya</h2>
-
+<h2>Tentang Saya</h2>
     <p>Nama: <?php echo $nama; ?></p>
     <p>Kelas: <?php echo $kelas; ?></p>
     <p>Sekolah: <?php echo $sekolah; ?></p>
     <p>Jurusan: <?php echo $jurusan; ?></p>
     <p>Hobi: <?php echo $hobi; ?></p>
     <p>Cita-cita: <?php echo $cita_cita; ?></p>
+ <h2>Deskripsi Saya</h2>
 
-    <h3>Deskripsi Diri</h3>
     <p>
         Saya adalah seorang pelajar yang sedang belajar
         Rekayasa Perangkat Lunak. Saya senang mempelajari
