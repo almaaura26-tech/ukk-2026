@@ -1,5 +1,5 @@
 <?php
-// kelola_siswa.php
+// Data_siswa.php
 include 'includes/cek_session.php';
 include 'config/koneksi.php';
 
@@ -13,7 +13,7 @@ $hasil = mysqli_query($koneksi, $sql);
 
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <title>login - Pelanggaran Siswa</title>
-    <title>Kelola siswa</title>
+    <title>Data siswa</title>
 </head>
 
 <body>
@@ -24,7 +24,7 @@ $hasil = mysqli_query($koneksi, $sql);
     <div class="row">
         <!-- KONTEN -->
         <main class="col-md-9 col-lg-10 p-4">    
-<h1>Kelola siswa</h1>
+<h1>Data siswa</h1>
 
     <p>
         <a href="dashboard.php">Kembali ke Dashboard</a> |

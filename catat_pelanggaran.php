@@ -244,12 +244,12 @@ $hasil = mysqli_query($koneksi, $sql);
 
                         </div>
 
-                        <button type="submit" class="btn btn-primary">
-                            Simpan Pelanggaran
+                        <button type="submit" 
+                        class="btn btn-primary">Simpan Pelanggaran
                         </button>
 
                         <a href="dashboard.php"
-                           class="btn btn-secondary">Kembali</a>
+                           class="btn btn-danger">Kembali</a>
                     </form>
                 </div>
             </div>

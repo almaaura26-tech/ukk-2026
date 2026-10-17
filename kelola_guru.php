@@ -1,5 +1,5 @@
 <?php
-// kelola_guru.php
+// Data_guru.php
 include 'includes/cek_session.php';
 include 'config/koneksi.php';
 
@@ -11,7 +11,7 @@ $hasil = mysqli_query($koneksi, $sql);
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <title>Kelola Guru</title>
+    <title>Data Guru</title>
 </head>
 
 <body>
@@ -20,7 +20,7 @@ $hasil = mysqli_query($koneksi, $sql);
     <div class="row">
         <!-- KONTEN -->
         <main class="col-md-9 col-lg-10 p-4">
-            <h2>Kelola Guru</h2>
+            <h2>Data Guru</h2>
             <p>
                 Selamat datang di halaman Guru.
             </p>

@@ -1,5 +1,5 @@
 <?php
-// kelola_wali_kelas.php
+// Data_wali_kelas.php
 include 'includes/cek_session.php';
 include 'config/koneksi.php';
 
@@ -19,7 +19,7 @@ $hasil = mysqli_query($koneksi, $sql);
 <html>
 <head>
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <title>Kelola Wali Kelas</title>
+    <title>Data Wali Kelas</title>
 </head>
 <body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -29,7 +29,7 @@ $hasil = mysqli_query($koneksi, $sql);
     <div class="row">
         <!-- KONTEN -->
         <main class="col-md-9 col-lg-10 p-4">
-<h1>Kelola Wali Kelas</h1>
+<h1>Data Wali Kelas</h1>
 
 <p>
     <a href="dashboard.php">Kembali ke Dashboard</a> |

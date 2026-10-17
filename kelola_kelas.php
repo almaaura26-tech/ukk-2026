@@ -1,5 +1,5 @@
 <?php
-// kelola_kelas.php
+// Data_kelas.php
 include 'includes/cek_session.php';
 include 'config/koneksi.php';
 
@@ -12,7 +12,7 @@ $hasil = mysqli_query($koneksi, $sql);
 
 <head>
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <title>Kelola Kelas</title>
+    <title>Data Kelas</title>
 </head>
 
 <body>
@@ -22,7 +22,7 @@ $hasil = mysqli_query($koneksi, $sql);
        
         <!-- KONTEN -->
         <main class="col-md-9 col-lg-10 p-4">
-            <h2>Kelola Kelas</h2>
+            <h2>Data Kelas</h2>
             <p>
                 Selamat datang di halaman Kelas.
             </p>

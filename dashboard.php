@@ -16,6 +16,7 @@ include 'includes/cek_session.php';
 
 <div class="container-fluid">
     <div class="row">
+        
         <?php
             include "layout/sidebar.php";
         ?>
@@ -26,43 +27,34 @@ include 'includes/cek_session.php';
                 Selamat datang di halaman dashboard
             </p>
             <div class="row">
-                <!-- CARD DATA SISWA -->
-                <div class="col-md-4 mb-3">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Data Siswa
-                            </h5>
-                            <h2>
-                                120
-                            </h2>
-                        </div>
-                    </div>
-                </div>
-                <!-- CARD DATA GURU -->
-                <div class="col-md-4 mb-3">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Data Guru
-                            </h5>
-                            <h2>
-                                25
-                            </h2>
-                        </div>
-                    </div>
-                </div>
-                <!-- CARD KELAS -->
-                <div class="col-md-4 mb-3">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                Kelas
-                            </h5>
-                            <h2>
-                             12
-                          </h2>
-                        </div>
+<!-- CARD DATA SISWA - BIRU -->
+<div class="col-md-4 mb-3">
+    <div class="card shadow-sm bg-primary text-white">
+        <div class="card-body">
+            <h5 class="card-title">Data Siswa</h5>
+            <h2>120</h2>
+        </div>
+    </div>
+</div>
+<!-- CARD DATA GURU - KUNING -->
+<div class="col-md-4 mb-3">
+    <div class="card shadow-sm bg-warning text-white">
+        <div class="card-body">
+            <h5 class="card-title">Data Guru</h5>
+            <h2>25</h2>
+        </div>
+    </div>
+</div>
+
+<!-- CARD KELAS - HIJAU -->
+<div class="col-md-4 mb-3">
+    <div class="card shadow-sm bg-success text-white">
+        <div class="card-body">
+            <h5 class="card-title">Kelas</h5>
+            <h2>12</h2>
+        </div>
+    </div>
+</div>
                     </div>
                 </div>
             </div>

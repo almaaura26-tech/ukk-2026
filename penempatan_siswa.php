@@ -188,7 +188,7 @@ $hasil = mysqli_query($koneksi, $sql);
 
             <tr>
                 <td colspan="3">
-                    <input type="submit" value="Simpan Penempatan">
+                    <input type="submit" value="Simpan Penempatan"class="btn btn-primary"> 
                 </td>
             </tr>
 
@@ -199,7 +199,7 @@ $hasil = mysqli_query($koneksi, $sql);
 
     <h3>Data Penempatan Siswa</h3>
 
-    <table border="1" cellpadding="6" cellspacing="0">
+    <table  class="table table-sm">
         <tr>
             <th>No</th>
             <th>NIS</th>
