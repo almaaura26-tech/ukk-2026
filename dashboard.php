@@ -1,65 +1,121 @@
+
 <?php
-//dasboard.php
+// dashboard.php
 include 'includes/cek_session.php';
+include 'config/koneksi.php';
+
+// Menghitung jumlah data siswa
+$sql_siswa = "SELECT COUNT(*) AS total FROM t_siswa";
+$query_siswa = mysqli_query($koneksi, $sql_siswa);
+$data_siswa = mysqli_fetch_assoc($query_siswa);
+$total_siswa = $data_siswa['total'];
+
+// Menghitung jumlah data guru
+$sql_guru = "SELECT COUNT(*) AS total FROM t_guru";
+$query_guru = mysqli_query($koneksi, $sql_guru);
+$data_guru = mysqli_fetch_assoc($query_guru);
+$total_guru = $data_guru['total'];
+
+// Menghitung jumlah kelas
+$sql_kelas = "SELECT COUNT(*) AS total FROM t_kelas";
+$query_kelas = mysqli_query($koneksi, $sql_kelas);
+$data_kelas = mysqli_fetch_assoc($query_kelas);
+$total_kelas = $data_kelas['total'];
 ?>
+
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Dashboard</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 </head>
 
 <body>
-     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 <div class="container-fluid">
     <div class="row">
-        
-        <?php
-            include "layout/sidebar.php";
-        ?>
+
+        <!-- SIDEBAR -->
+        <?php include "layout/sidebar.php"; ?>
+
         <!-- KONTEN -->
         <main class="col-md-9 col-lg-10 p-4">
+
             <h2>Dashboard</h2>
+
             <p>
-                Selamat datang di halaman dashboard
+                Selamat datang di halaman dashboard.
             </p>
+
             <div class="row">
-<!-- CARD DATA SISWA - BIRU -->
-<div class="col-md-4 mb-3">
-    <div class="card shadow-sm bg-primary text-white">
-        <div class="card-body">
-            <h5 class="card-title">Data Siswa</h5>
-            <h2>120</h2>
-        </div>
-    </div>
-</div>
-<!-- CARD DATA GURU - KUNING -->
-<div class="col-md-4 mb-3">
-    <div class="card shadow-sm bg-warning text-white">
-        <div class="card-body">
-            <h5 class="card-title">Data Guru</h5>
-            <h2>25</h2>
-        </div>
+
+                <!-- CARD DATA SISWA -->
+                <div class="col-md-4 mb-3">
+                    <div class="card shadow-sm bg-primary text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Data Siswa</h5>
+
+                            <h2>
+                                <?= $total_siswa ?>
+                            </h2>
+
+                            <a href="Data_siswa.php"
+                               class="btn btn-light btn-sm">
+                                Lihat Data Siswa
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD DATA GURU -->
+                <div class="col-md-4 mb-3">
+                    <div class="card shadow-sm bg-warning text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Data Guru</h5>
+
+                            <h2>
+                                <?= $total_guru ?>
+                            </h2>
+
+                            <a href="Data_guru.php"
+                               class="btn btn-light btn-sm">
+                                Lihat Data Guru
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD DATA KELAS -->
+                <div class="col-md-4 mb-3">
+                    <div class="card shadow-sm bg-success text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Data Kelas</h5>
+
+                            <h2>
+                                <?= $total_kelas ?>
+                            </h2>
+                            <a href="Data_kelas.php"
+                               class="btn btn-light btn-sm">
+                                Lihat Data Kelas
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
     </div>
 </div>
 
-<!-- CARD KELAS - HIJAU -->
-<div class="col-md-4 mb-3">
-    <div class="card shadow-sm bg-success text-white">
-        <div class="card-body">
-            <h5 class="card-title">Kelas</h5>
-            <h2>12</h2>
-        </div>
-    </div>
-</div>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-</div>      
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

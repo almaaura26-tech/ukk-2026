@@ -1,3 +1,4 @@
+
 <?php
 // Data_pelanggaran_kategori.php
 
@@ -7,88 +8,170 @@ include 'config/koneksi.php';
 $sql = "SELECT * FROM t_pelanggaran_kategori ORDER BY id DESC";
 $hasil = mysqli_query($koneksi, $sql);
 
+if (!$hasil) {
+    die("Query gagal: " . mysqli_error($koneksi));
+}
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Data Kategori Pelanggaran</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css"
+          rel="stylesheet">
 </head>
+
 <body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <div class="container-fluid">
+
+<div class="container-fluid">
     <div class="row">
+
+        <!-- SIDEBAR -->
+        <?php include 'layout/sidebar.php'; ?>
+
         <!-- KONTEN -->
         <main class="col-md-9 col-lg-10 p-4">
-<h1>Data Kategori Pelanggaran</h1>
 
-    <p>
-        <a href="dashboard.php">Kembali ke Dashboard</a> |
-        <a href="tambah_pelanggaran_kategori.php">
-            Tambah Kategori Pelanggaran
-        </a>
-    </p>
+            <h2 class="mb-4">Data Kategori Pelanggaran</h2>
+             <p>Selamat datang di halaman prlanggaran kategori.</p>
 
-    <table border="1" cellpadding="6" cellspacing="0">
-        <tr>
-            <th>ID</th>
-            <th>Nama Kategori</th>
-            <th>Deskripsi</th>
-            <th>Status Aktif</th>
-            <th>Dibuat</th>
-            <th>Diubah</th>
-            <th>Aksi</th>
-        </tr>
+            <div class="mb-3">
+                <a href="dashboard.php" class="btn btn-primary">
+                    Kembali ke Dashboard
+                </a>
 
-        <?php while ($row = mysqli_fetch_assoc($hasil)) { ?>
-        <tr>
-            <td>
-                <?php echo $row['id']; ?>
-            </td>
+                <a href="tambah_pelanggaran_kategori.php"
+                   class="btn btn-success">
+                    + Tambah Kategori Pelanggaran
+                </a>
+            </div>
 
-            <td>
-                <?php echo htmlspecialchars($row['nama']); ?>
-            </td>
+            <div class="card shadow-sm">
+                <div class="card-body">
 
-            <td>
-                <?php echo htmlspecialchars($row['deskripsi'] ?? ''); ?>
-            </td>
+                    <div class="table-responsive">
+                        <table id="tabelKategori"
+                               class="table table-bordered table-striped table-hover align-middle"
+                               style="width:100%">
 
-            <td>
-                <?php
-                if ($row['status_aktif'] == 1) {
-                    echo "Aktif";
-                } else {
-                    echo "Tidak Aktif";
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nama Kategori</th>
+                                    <th>Deskripsi</th>
+                                    <th>Status Aktif</th>
+                                    <th>Dibuat</th>
+                                    <th>Diubah</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php while ($row = mysqli_fetch_assoc($hasil)) { ?>
+                                    <tr>
+                                        <td>
+                                            <?= (int) $row['id']; ?>
+                                        </td>
+
+                                        <td>
+                                            <?= htmlspecialchars($row['nama'] ?? ''); ?>
+                                        </td>
+
+                                        <td>
+                                            <?= htmlspecialchars($row['deskripsi'] ?? ''); ?>
+                                        </td>
+
+                                        <td>
+                                            <?php if ($row['status_aktif'] == 1) { ?>
+                                                <span class="badge bg-success">Aktif</span>
+                                            <?php } else { ?>
+                                                <span class="badge bg-secondary">Tidak Aktif</span>
+                                            <?php } ?>
+                                        </td>
+
+                                        <td>
+                                            <?= htmlspecialchars($row['created_at'] ?? ''); ?>
+                                        </td>
+
+                                        <td>
+                                            <?= htmlspecialchars($row['updated_at'] ?? ''); ?>
+                                        </td>
+
+                                        <td>
+                                            <div class="d-flex gap-1">
+                                                <a href="edit_pelanggaran_kategori.php?id=<?= (int) $row['id']; ?>"
+                                                   class="btn btn-sm btn-warning">
+                                                    Edit
+                                                </a>
+
+                                                <a href="hapus_pelanggaran_kategori.php?id=<?= (int) $row['id']; ?>"
+                                                   class="btn btn-sm btn-danger"
+                                                   onclick="return confirm('Yakin ingin menghapus kategori pelanggaran ini?');">
+                                                    Hapus
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+
+<!-- Aktifkan DataTables -->
+<script>
+    $(document).ready(function () {
+        $('#tabelKategori').DataTable({
+            pageLength: 10,
+            lengthMenu: [5, 10, 25, 50, 100],
+            ordering: true,
+            searching: true,
+            language: {
+                search: "Cari:",
+                lengthMenu: "Tampilkan _MENU_ data",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoEmpty: "Tidak ada data",
+                zeroRecords: "Data tidak ditemukan",
+                emptyTable: "Belum ada data kategori pelanggaran",
+                paginate: {
+                    first: "Pertama",
+                    last: "Terakhir",
+                    next: "Berikutnya",
+                    previous: "Sebelumnya"
                 }
-                ?>
-            </td>
-
-            <td>
-                <?php echo $row['created_at']; ?>
-            </td>
-
-            <td>
-                <?php echo $row['updated_at']; ?>
-            </td>
-
-            <td>
-                <a href="edit_pelanggaran_kategori.php?id=<?php echo $row['id']; ?>">
-                   <button type="button" class="btn btn-primary">Edit</button>
-                </a>
-                |
-                <a href="hapus_pelanggaran_kategori.php?id=<?php echo $row['id']; ?>"
-                   onclick="return confirm('Yakin ingin menghapus kategori pelanggaran ini?');">
-                    <button type="button" class="btn btn-danger">Hapus</button>
-                </a>
-            </td>
-        </tr>
-        <?php } ?>
-
-    </table>
+            },
+            columnDefs: [
+                { orderable: false, targets: 6 }
+            ]
+        });
+    });
+</script>
 
 </body>
 </html>
