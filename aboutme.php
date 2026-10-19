@@ -46,7 +46,7 @@ $cita_cita = "POLWAN";
             <div class="row align-items-center text-center text-md-start">
 
                 <div class="col-md-4 mb-3 mb-md-0 text-center">
-                    <img src="img/shawn.jpg"
+                    <img src="img/alma.jpg"
                          alt="Foto Profil"
                          class="rounded-circle img-thumbnail shadow"
                          width="190"
