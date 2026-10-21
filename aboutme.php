@@ -32,9 +32,6 @@ $cita_cita = "POLWAN";
             Tentang Saya
         </a>
 
-        <a href="dashboard.php" class="btn btn-success btn">
-            Kembali ke Dashboard
-        </a>
     </div>
 </nav>
 

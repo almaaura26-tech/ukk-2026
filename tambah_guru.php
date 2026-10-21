@@ -41,27 +41,32 @@ include 'includes/cek_session.php';
                     <input type="email" name="email" required>
                 </td>
             </tr>
-
+                <tr>
+                                <td>Konfirmasi Password</td>
+                                <td>:</td>
+                                <td>
+                                    <input type="number" name="user_id">
+                                </td>
+                            </tr>
+                            <tr>
             <tr>
-                <td>Status Aktif</td>
-                <td>:</td>
-                <td>
-                    <select name="status_aktif" required>
-                        <option value="1">Aktif</option>
-                        <option value="0">Tidak Aktif</option>
-                    </select>
-                </td>
-            </tr>
-
-            <tr>
-                <td>User ID</td>
+                <td>Password</td>
                 <td>:</td>
                 <td>
                     <input type="number" name="user_id">
                 </td>
             </tr>
-
             <tr>
+                            <td>Status Aktif</td>
+                            <td>:</td>
+                            <td>
+                                <select name="status_aktif" required>
+                                    <option value="1">Aktif</option>
+                                    <option value="0">Tidak Aktif</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
                 <td colspan="3">
                     <input type="submit" value="Simpan">
                 </td>
