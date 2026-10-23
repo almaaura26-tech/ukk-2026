@@ -1,7 +1,4 @@
 <?php
-            if($_SESSION['role'] === "admin") {
-        ?>
-           <?php
 $current_page = basename($_SERVER['PHP_SELF']);
 
 if ($_SESSION['role'] === "admin") {
@@ -70,12 +67,28 @@ if ($_SESSION['role'] === "admin") {
                 </a>
             </li>
 
+                    
             <li class="nav-item mb-2">
+                <a href="kelola_jenis_pelanggaran.php"
+                   class="nav-link <?= ($current_page == 'kelola_jenis_pelanggaran.php') ? 'active' : 'text-white' ?>">
+                    Kategori jenis Pelanggaran
+                </a>
+            </li>
+
+          <li class="nav-item mb-2">
+                    <a href="laporan.php" class="nav-link text-white">
+                        Laporan
+                    </a>
+                </li>
+
+
+                    <li class="nav-item mb-2">
                 <a href="aboutme.php"
-                   class="nav-link <?= ($current_page == 'aboutme.php') ? 'active' : 'text-white' ?>">
+                class="nav-link <?= ($current_page == 'aboutme.php') ? 'active' : 'text-white' ?>">
                     About Me
                 </a>
             </li>
+
 
             <hr class="text-secondary">
 
@@ -134,6 +147,7 @@ if ($_SESSION['role'] === "admin") {
                     Rekap Poin
                 </a>
             </li>
+            
 
             <hr class="text-secondary">
 
@@ -149,47 +163,3 @@ if ($_SESSION['role'] === "admin") {
 <?php
 }
 ?>
-        <?php
-        } elseif($_SESSION['role'] === "guru") {
-        ?>
-        <!-- SIDEBAR GURU -->
-        <div class="col-md-3 col-lg-2 bg-dark min-vh-100 p-3">
-            <h4 class="text-white mb-4">
-                Pelanggaran Siswa
-            </h4>
-            <ul class="nav nav-pills flex-column">
-                <li class="nav-item mb-2">
-                    <a href="dashboard.php" class="nav-link active">
-                        Dashboard
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a href="catat_pelanggaran.php" class="nav-link text-white">
-                        Catat Pelanggaran
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a href="tindakan.php" class="nav-link text-white">
-                        Tindakan
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a href="riwayat.php" class="nav-link text-white">
-                        Riwayat
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a href="rekap_poin.php" class="nav-link text-white">
-                        Rekap Poin
-                    </a>
-                <hr class="text-secondary">
-                <li class="nav-item">
-                    <a href="logout.php" class="nav-link text-danger">
-                        Logout
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <?php
-        }
-        ?>

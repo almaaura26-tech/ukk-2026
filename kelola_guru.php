@@ -6,6 +6,10 @@ include 'config/koneksi.php';
 
 $sql = "SELECT * FROM t_guru ORDER BY nama ASC";
 $hasil = mysqli_query($koneksi, $sql);
+
+if (!$hasil) {
+    die("Query gagal: " . mysqli_error($koneksi));
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +23,7 @@ $hasil = mysqli_query($koneksi, $sql);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
           rel="stylesheet">
 
-    <!-- CSS DataTables -->
+    <!-- DataTables Bootstrap 5 -->
     <link rel="stylesheet"
           href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
 </head>
@@ -28,78 +32,99 @@ $hasil = mysqli_query($koneksi, $sql);
 
 <div class="container-fluid">
     <div class="row">
+
         <!-- SIDEBAR -->
-        <?php
-         include 'layout/sidebar.php';
-        ?>
+        <?php include 'layout/sidebar.php'; ?>
+
         <!-- KONTEN -->
         <main class="col-md-9 col-lg-10 p-4">
 
-    <h2>Data Guru</h2>
-    <p>Selamat datang di halaman Data Guru.</p>
+            <h2>Data Guru</h2>
+            <p>Selamat datang di halaman Data Guru.</p>
 
-    <div class="mb-3">
-        <a href="dashboard.php" class="btn btn-primary">
-            Kembali ke Dashboard
-        </a>
+            <div class="mb-3">
+                <a href="dashboard.php" class="btn btn-primary">
+                    Kembali ke Dashboard
+                </a>
 
-        <a href="tambah_guru.php" class="btn btn-success">
-            + Tambah Guru
-        </a>
-    </div>
+                <a href="tambah_guru.php" class="btn btn-success">
+                    + Tambah Guru
+                </a>
+            </div>
 
-    <div class="table-responsive">
-        <table id="tabelGuru" class="table table-striped table-bordered table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>NIP</th>
-                    <th>Nama Guru</th>
-                    <th>Email</th>
-                    <th>Status Aktif</th>
-                    <th>Dibuat</th>
-                    <th>Diubah</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
+            <!-- TABEL GURU -->
+            <div class="table-responsive">
+                <table id="tabelGuru"
+                       class="table table-striped table-bordered table-hover">
 
-            <tbody>
-                <?php while ($row = mysqli_fetch_assoc($hasil)) { ?>
-                <tr>
-                    <td><?= htmlspecialchars($row['id']) ?></td>
-                    <td><?= htmlspecialchars($row['nip']) ?></td>
-                    <td><?= htmlspecialchars($row['nama']) ?></td>
-                    <td><?= htmlspecialchars($row['email']) ?></td>
+                    <thead class="table-dark">
+                        <tr>
+                            <th>No</th>
+                            <th>NIP</th>
+                            <th>Nama Guru</th>
+                            <th>Email</th>
+                            <th>Status Aktif</th>
+                            <th>Dibuat</th>
+                            <th>Diubah</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
 
-                    <td>
-                        <?php if ($row['status_aktif'] == 1) { ?>
-                            <span class="badge bg-success">Aktif</span>
-                        <?php } else { ?>
-                            <span class="badge bg-danger">Tidak Aktif</span>
+                    <tbody>
+                        <?php while ($row = mysqli_fetch_assoc($hasil)) { ?>
+                        <tr>
+                            <!-- Nomor urut otomatis -->
+                            <td></td>
+
+                            <td>
+                                <?= htmlspecialchars($row['nip']) ?>
+                            </td>
+
+                            <td>
+                                <?= htmlspecialchars($row['nama']) ?>
+                            </td>
+
+                            <td>
+                                <?= htmlspecialchars($row['email']) ?>
+                            </td>
+
+                            <td>
+                                <?php if ($row['status_aktif'] == 1) { ?>
+                                    <span class="badge bg-success">Aktif</span>
+                                <?php } else { ?>
+                                    <span class="badge bg-danger">Tidak Aktif</span>
+                                <?php } ?>
+                            </td>
+
+                            <td>
+                                <?= htmlspecialchars($row['created_at'] ?? '') ?>
+                            </td>
+
+                            <td>
+                                <?= htmlspecialchars($row['updated_at'] ?? '') ?>
+                            </td>
+
+                            <td>
+                                <a href="edit_guru.php?id=<?= urlencode($row['id']) ?>"
+                                   class="btn btn-primary btn-sm mb-1">
+                                    Edit
+                                </a>
+
+                                <a href="hapus_guru.php?id=<?= urlencode($row['id']) ?>"
+                                   class="btn btn-danger btn-sm mb-1"
+                                   onclick="return confirm('Yakin ingin menghapus data guru ini?');">
+                                    Hapus
+                                </a>
+                            </td>
+                        </tr>
                         <?php } ?>
-                    </td>
+                    </tbody>
 
-                    <td><?= htmlspecialchars($row['created_at'] ?? '') ?></td>
-                    <td><?= htmlspecialchars($row['updated_at'] ?? '') ?></td>
+                </table>
+            </div>
 
-                    <td>
-                        <a href="edit_guru.php?id=<?= urlencode($row['id']) ?>"
-                           class="btn btn-primary btn-sm">
-                            Edit
-                        </a>
-
-                        <a href="hapus_guru.php?id=<?= urlencode($row['id']) ?>"
-                           class="btn btn-danger btn-sm"
-                           onclick="return confirm('Yakin ingin menghapus data guru ini?');">
-                            Hapus
-                        </a>
-                    </td>
-                </tr>
-                <?php } ?>
-            </tbody>
-        </table>
+        </main>
     </div>
-
 </div>
 
 <!-- jQuery -->
@@ -112,15 +137,30 @@ $hasil = mysqli_query($koneksi, $sql);
 <!-- JavaScript DataTables -->
 <script>
 $(document).ready(function () {
-    $('#tabelGuru').DataTable({
+
+    var tabel = $('#tabelGuru').DataTable({
         pageLength: 10,
         lengthMenu: [5, 10, 25, 50, 100],
         order: [[2, 'asc']],
+
+        columnDefs: [
+            {
+                targets: 0,
+                orderable: false,
+                searchable: false
+            },
+            {
+                targets: 7,
+                orderable: false,
+                searchable: false
+            }
+        ],
+
         language: {
             search: "Cari:",
             lengthMenu: "Tampilkan _MENU_ data",
             info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-            infoEmpty: "Tidak ada data",
+            infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
             infoFiltered: "(difilter dari _MAX_ total data)",
             zeroRecords: "Data tidak ditemukan",
             emptyTable: "Belum ada data guru",
@@ -132,9 +172,26 @@ $(document).ready(function () {
             }
         }
     });
+
+    // Mengatur nomor urut berdasarkan data yang tampil
+    function nomorUrut() {
+        tabel.column(0, {
+            search: 'applied',
+            order: 'applied'
+        }).nodes().each(function (cell, i) {
+            cell.textContent = i + 1;
+        });
+    }
+
+    // Perbarui nomor saat pencarian, pengurutan, atau halaman berubah
+    tabel.on('draw.dt', function () {
+        nomorUrut();
+    });
+
+    nomorUrut();
+
 });
 </script>
 
 </body>
 </html>
-```

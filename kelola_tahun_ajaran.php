@@ -1,10 +1,15 @@
+
 <?php
 // Data_tahun_ajaran.php
 include 'includes/cek_session.php';
 include 'config/koneksi.php';
 
-$sql = "SELECT * FROM t_tahun_ajaran ORDER BY tanggal_mulai DESC";
+$sql = "SELECT * FROM t_tahun_ajaran ORDER BY tanggal_mulai DESC, id DESC";
 $hasil = mysqli_query($koneksi, $sql);
+
+if (!$hasil) {
+    die("Query gagal: " . mysqli_error($koneksi));
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,14 +17,13 @@ $hasil = mysqli_query($koneksi, $sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Data Tahun Ajaran</title>
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
           rel="stylesheet">
 
-    <!-- CSS DataTables Bootstrap 5 -->
+    <!-- DataTables Bootstrap 5 -->
     <link rel="stylesheet"
           href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
 </head>
@@ -48,15 +52,14 @@ $hasil = mysqli_query($koneksi, $sql);
                 </a>
             </div>
 
-            <!-- TABEL DATA TAHUN AJARAN -->
+            <!-- TABEL TAHUN AJARAN -->
             <div class="table-responsive">
-
                 <table id="tabelTahunAjaran"
                        class="table table-striped table-bordered table-hover">
 
                     <thead class="table-dark">
                         <tr>
-                            <th>ID</th>
+                            <th>No</th>
                             <th>Nama Tahun Ajaran</th>
                             <th>Tanggal Mulai</th>
                             <th>Tanggal Selesai</th>
@@ -69,11 +72,9 @@ $hasil = mysqli_query($koneksi, $sql);
 
                     <tbody>
                         <?php while ($row = mysqli_fetch_assoc($hasil)) { ?>
-
                         <tr>
-                            <td>
-                                <?= htmlspecialchars($row['id']) ?>
-                            </td>
+                            <!-- Nomor urut otomatis -->
+                            <td></td>
 
                             <td>
                                 <?= htmlspecialchars($row['nama']) ?>
@@ -105,50 +106,62 @@ $hasil = mysqli_query($koneksi, $sql);
 
                             <td>
                                 <a href="edit_tahun_ajaran.php?id=<?= urlencode($row['id']) ?>"
-                                   class="btn btn-primary btn-sm">
+                                   class="btn btn-primary btn-sm mb-1">
                                     Edit
                                 </a>
 
                                 <a href="hapus_tahun_ajaran.php?id=<?= urlencode($row['id']) ?>"
-                                   class="btn btn-danger btn-sm"
+                                   class="btn btn-danger btn-sm mb-1"
                                    onclick="return confirm('Yakin ingin menghapus data tahun ajaran ini?');">
                                     Hapus
                                 </a>
                             </td>
                         </tr>
-
                         <?php } ?>
                     </tbody>
 
                 </table>
-
             </div>
 
         </main>
     </div>
 </div>
 
-<!-- jQuery versi lengkap -->
+<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-<!-- JavaScript DataTables -->
+<!-- DataTables -->
 <script src="https://cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/2.3.4/js/dataTables.bootstrap5.min.js"></script>
 
-<!-- Inisialisasi DataTables -->
 <script>
 $(document).ready(function () {
 
-    $('#tabelTahunAjaran').DataTable({
+    var tabel = $('#tabelTahunAjaran').DataTable({
         pageLength: 10,
         lengthMenu: [5, 10, 25, 50, 100],
+
+        // Urutkan berdasarkan tanggal mulai terbaru
         order: [[2, 'desc']],
+
+        columnDefs: [
+            {
+                targets: 0,
+                orderable: false,
+                searchable: false
+            },
+            {
+                targets: 7,
+                orderable: false,
+                searchable: false
+            }
+        ],
 
         language: {
             search: "Cari:",
             lengthMenu: "Tampilkan _MENU_ data",
             info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-            infoEmpty: "Tidak ada data",
+            infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
             infoFiltered: "(difilter dari _MAX_ total data)",
             zeroRecords: "Data tahun ajaran tidak ditemukan",
             emptyTable: "Belum ada data tahun ajaran",
@@ -161,6 +174,23 @@ $(document).ready(function () {
             }
         }
     });
+
+    // Membuat nomor urut otomatis
+    function nomorUrut() {
+        tabel.column(0, {
+            search: 'applied',
+            order: 'applied'
+        }).nodes().each(function (cell, i) {
+            cell.textContent = i + 1;
+        });
+    }
+
+    // Perbarui nomor saat tabel berubah
+    tabel.on('draw.dt', function () {
+        nomorUrut();
+    });
+
+    nomorUrut();
 
 });
 </script>

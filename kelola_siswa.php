@@ -1,6 +1,6 @@
 
 <?php
-// data_siswa.php
+// kelola_data_siswa.php
 include 'includes/cek_session.php';
 include 'config/koneksi.php';
 
@@ -10,7 +10,35 @@ $hasil = mysqli_query($koneksi, $sql);
 if (!$hasil) {
     die("Query gagal: " . mysqli_error($koneksi));
 }
+
+// Notifikasi berhasil atau gagal
+$pesan = $_GET['pesan'] ?? '';
+$notifikasi = '';
+$jenis_notifikasi = 'success';
+
+if ($pesan === 'edit') {
+    $notifikasi = 'Data siswa berhasil diperbarui.';
+} elseif ($pesan === 'hapus' || $pesan === 'hapus_berhasil') {
+    $notifikasi = 'Data siswa berhasil dihapus.';
+} elseif ($pesan === 'tambah') {
+    $notifikasi = 'Data siswa berhasil ditambahkan.';
+} elseif ($pesan === 'hapus_gagal') {
+    $notifikasi = 'Data siswa gagal dihapus atau tidak ditemukan.';
+    $jenis_notifikasi = 'danger';
+}
+
+// Notifikasi dari session
+if (!empty($_SESSION['pesan_sukses'])) {
+    $notifikasi = $_SESSION['pesan_sukses'];
+    $jenis_notifikasi = 'success';
+    unset($_SESSION['pesan_sukses']);
+} elseif (!empty($_SESSION['pesan_error'])) {
+    $notifikasi = $_SESSION['pesan_error'];
+    $jenis_notifikasi = 'danger';
+    unset($_SESSION['pesan_error']);
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -40,7 +68,24 @@ if (!$hasil) {
         <main class="col-md-9 col-lg-10 p-4">
 
             <h1>Data Siswa</h1>
-             <p>Selamat datang di halaman Siswa.</p>
+            <p>Selamat datang di halaman Siswa.</p>
+
+            <!-- NOTIFIKASI -->
+            <?php if ($notifikasi !== '') { ?>
+                <div class="alert alert-<?= htmlspecialchars($jenis_notifikasi) ?> alert-dismissible fade show"
+                     role="alert">
+
+                    <?= htmlspecialchars($notifikasi) ?>
+
+                    <button type="button"
+                            class="close"
+                            data-dismiss="alert"
+                            aria-label="Tutup">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+            <?php } ?>
 
             <p>
                 <a href="dashboard.php" class="btn btn-primary">
@@ -59,7 +104,7 @@ if (!$hasil) {
 
                     <thead class="thead-dark">
                         <tr>
-                            <th>ID</th>
+                            <th>No</th>
                             <th>NIS</th>
                             <th>NISN</th>
                             <th>Nama</th>
@@ -76,60 +121,31 @@ if (!$hasil) {
                     <tbody>
                         <?php while ($row = mysqli_fetch_assoc($hasil)) { ?>
                         <tr>
-                            <td>
-                                <?php echo htmlspecialchars($row['id']); ?>
-                            </td>
+                            <td></td>
+
+                            <td><?= htmlspecialchars($row['nis']) ?></td>
+                            <td><?= htmlspecialchars($row['nisn']) ?></td>
+                            <td><?= htmlspecialchars($row['nama']) ?></td>
+                            <td><?= htmlspecialchars($row['jenis_kelamin']) ?></td>
+                            <td><?= htmlspecialchars($row['tanggal_lahir']) ?></td>
+                            <td><?= htmlspecialchars($row['alamat']) ?></td>
 
                             <td>
-                                <?php echo htmlspecialchars($row['nis']); ?>
-                            </td>
-
-                            <td>
-                                <?php echo htmlspecialchars($row['nisn']); ?>
-                            </td>
-
-                            <td>
-                                <?php echo htmlspecialchars($row['nama']); ?>
-                            </td>
-
-                            <td>
-                                <?php echo htmlspecialchars($row['jenis_kelamin']); ?>
-                            </td>
-
-                            <td>
-                                <?php echo htmlspecialchars($row['tanggal_lahir']); ?>
-                            </td>
-
-                            <td>
-                                <?php echo htmlspecialchars($row['alamat']); ?>
-                            </td>
-
-                            <td>
-                                <?php
-                                echo ($row['status_aktif'] == 1)
+                                <?= ($row['status_aktif'] == 1)
                                     ? 'Aktif'
-                                    : 'Tidak Aktif';
-                                ?>
+                                    : 'Tidak Aktif' ?>
                             </td>
 
-                            <td>
-                                <?php echo htmlspecialchars($row['created_at'] ?? ''); ?>
-                            </td>
+                            <td><?= htmlspecialchars($row['created_at'] ?? '') ?></td>
+                            <td><?= htmlspecialchars($row['updated_at'] ?? '') ?></td>
 
                             <td>
-                                <?php echo htmlspecialchars($row['updated_at'] ?? ''); ?>
-                            </td>
-
-                            <td>
-                                <a href="edit_siswa.php?id=<?php
-                                    echo urlencode($row['id']);
-                                ?>" class="btn btn-primary btn-sm mb-1">
+                                <a href="edit_siswa.php?id=<?= urlencode($row['id']) ?>"
+                                   class="btn btn-primary btn-sm mb-1">
                                     Edit
                                 </a>
 
-                                <a href="hapus_siswa.php?id=<?php
-                                    echo urlencode($row['id']);
-                                ?>"
+                                <a href="hapus_siswa.php?id=<?= urlencode($row['id']) ?>"
                                    class="btn btn-danger btn-sm mb-1"
                                    onclick="return confirm('Yakin ingin menghapus data siswa ini?');">
                                     Hapus
@@ -146,7 +162,7 @@ if (!$hasil) {
     </div>
 </div>
 
-<!-- jQuery penuh (wajib sebelum DataTables) -->
+<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <!-- Bootstrap 4 -->
@@ -159,11 +175,20 @@ if (!$hasil) {
 <!-- Pengaturan DataTables -->
 <script>
 $(document).ready(function () {
-    $('#tabelSiswa').DataTable({
+
+    var tabel = $('#tabelSiswa').DataTable({
         pageLength: 10,
         lengthMenu: [5, 10, 25, 50, 100],
-        ordering: true,
-        searching: true,
+        order: [[3, 'asc']],
+
+        columnDefs: [
+            {
+                targets: [0, 10],
+                orderable: false,
+                searchable: false
+            }
+        ],
+
         language: {
             lengthMenu: "Tampilkan _MENU_ data",
             zeroRecords: "Data siswa tidak ditemukan",
@@ -180,6 +205,22 @@ $(document).ready(function () {
             }
         }
     });
+
+    // Nomor otomatis dan berurutan
+    function nomorUrut() {
+        var halaman = tabel.page.info().start;
+
+        tabel.column(0, {
+            search: 'applied',
+            order: 'applied'
+        }).nodes().each(function (cell, i) {
+            cell.textContent = halaman + i + 1;
+        });
+    }
+
+    tabel.on('draw.dt order.dt search.dt', nomorUrut);
+    nomorUrut();
+
 });
 </script>
 

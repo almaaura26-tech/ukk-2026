@@ -25,13 +25,6 @@ if (mysqli_query($koneksi, $sql)) {
 
     $aktivitas = "hapus guru: " . $data['nama'];
 
-    // Simpan aktivitas ke tabel log
-    $log = "INSERT INTO t_log 
-            (id_user, aktivitas, waktu) 
-            VALUES 
-            ('$id_user', '$aktivitas', '$waktu')";
-
-    mysqli_query($koneksi, $log);
 }
 
 // Kembali ke halaman kelola guru

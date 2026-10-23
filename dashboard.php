@@ -65,7 +65,7 @@ $total_kelas = $data_kelas['total'];
                                 <?= $total_siswa ?>
                             </h2>
 
-                            <a href="Data_siswa.php"
+                            <a href="kelola_siswa.php"
                                class="btn btn-light btn-sm">
                                 Lihat Data Siswa
                             </a>
@@ -83,7 +83,7 @@ $total_kelas = $data_kelas['total'];
                                 <?= $total_guru ?>
                             </h2>
 
-                            <a href="Data_guru.php"
+                            <a href="kelola_guru.php"
                                class="btn btn-light btn-sm">
                                 Lihat Data Guru
                             </a>
@@ -101,7 +101,7 @@ $total_kelas = $data_kelas['total'];
                                 <?= $total_kelas ?>
                             </h2>
 
-                            <a href="Data_kelas.php"
+                            <a href="kelola_kelas.php"
                                class="btn btn-light btn-sm">
                                 Lihat Data Kelas
                             </a>
@@ -119,7 +119,7 @@ $total_kelas = $data_kelas['total'];
                                 <?= $total_siswa ?>
                             </h2>
 
-                            <a href="Data_siswa.php"
+                            <a href="kelola_siswa.php"
                                class="btn btn-light btn-sm">
                                 Lihat Data Tahun Ajaran
                             </a>

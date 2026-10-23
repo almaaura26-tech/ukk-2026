@@ -24,6 +24,14 @@ $cita_cita = "POLWAN";
 </head>
 
 <body class="bg-light">
+    <div class="container-fluid">
+    <div class="row">
+        <!-- SIDEBAR -->
+        <?php
+         include 'layout/sidebar.php';
+        ?>
+<!-- KONTEN -->
+        <main class="col-md-9 col-lg-10 p-4">
 
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
