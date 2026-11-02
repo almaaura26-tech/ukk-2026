@@ -75,7 +75,7 @@ $total_kelas = $data_kelas['total'];
 
                 <!-- CARD DATA GURU -->
                 <div class="col-md-4 mb-3">
-                    <div class="card shadow-sm bg-warning text-dark">
+                    <div class="card shadow-sm bg-warning text-white">
                         <div class="card-body">
                             <h5 class="card-title">Data Guru</h5>
 
@@ -109,7 +109,7 @@ $total_kelas = $data_kelas['total'];
                     </div>
                 </div>
 
-                <!-- CARD DATA SISWA -->
+                <!-- CARD DATA TAHUN AJARAN -->
                 <div class="col-md-4 mb-3">
                     <div class="card shadow-sm bg-danger text-white">
                         <div class="card-body">
@@ -120,6 +120,40 @@ $total_kelas = $data_kelas['total'];
                             </h2>
 
                             <a href="kelola_siswa.php"
+                               class="btn btn-light btn-sm">
+                                Lihat Data Tahun Ajaran
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- CARD DATA SISWA -->
+                <div class="col-md-4 mb-3">
+                    <div class="card shadow-sm bg-info text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Data Wali Kelas</h5>
+
+                            <h2>
+                                <?= $total_siswa ?>
+                            </h2>
+
+                            <a href="kelola_wali_kelas.php"
+                               class="btn btn-light btn-sm">
+                                Lihat Data Tahun Ajaran
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- CARD DATA SISWA -->
+                <div class="col-md-4 mb-3">
+                    <div class="card shadow-sm bg-info text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Data Wali Kelas</h5>
+
+                            <h2>
+                                <?= $total_siswa ?>
+                            </h2>
+
+                            <a href="kelola_wali_kelas.php"
                                class="btn btn-light btn-sm">
                                 Lihat Data Tahun Ajaran
                             </a>
