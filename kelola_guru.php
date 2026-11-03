@@ -1,6 +1,5 @@
-
 <?php
-// Data_guru.php
+// kelola_guru.php
 include 'includes/cek_session.php';
 include 'config/koneksi.php';
 
@@ -17,15 +16,16 @@ if (!$hasil) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Guru</title>
 
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+    <title>Kelola Guru - Sistem Pelanggaran Siswa</title>
 
-    <!-- DataTables Bootstrap 5 -->
+    <!-- Bootstrap 4.6.2 -->
     <link rel="stylesheet"
-          href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <!-- DataTables Bootstrap 4 -->
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap4.min.css">
 </head>
 
 <body>
@@ -33,21 +33,20 @@ if (!$hasil) {
 <div class="container-fluid">
     <div class="row">
 
-        <!-- SIDEBAR -->
         <?php include 'layout/sidebar.php'; ?>
 
-        <!-- KONTEN -->
         <main class="col-md-9 col-lg-10 p-4">
 
-            <h2>Data Guru</h2>
-            <p>Selamat datang di halaman Data Guru.</p>
+            <h1>Kelola Guru</h1>
+            <p>Selamat datang di halaman Kelola Guru.</p>
 
             <div class="mb-3">
                 <a href="dashboard.php" class="btn btn-primary">
                     Kembali ke Dashboard
                 </a>
 
-                <a href="tambah_guru.php" class="btn btn-success">
+                <a href="tambah_guru.php"
+                   class="btn btn-success">
                     + Tambah Guru
                 </a>
             </div>
@@ -55,13 +54,13 @@ if (!$hasil) {
             <!-- TABEL GURU -->
             <div class="table-responsive">
                 <table id="tabelGuru"
-                       class="table table-striped table-bordered table-hover">
+                       class="table table-bordered table-striped table-hover">
 
-                    <thead class="table-dark">
+                    <thead class="thead-dark">
                         <tr>
                             <th>No</th>
                             <th>NIP</th>
-                            <th>Nama Guru</th>
+                            <th>Nama</th>
                             <th>Email</th>
                             <th>Status Aktif</th>
                             <th>Dibuat</th>
@@ -76,41 +75,29 @@ if (!$hasil) {
                             <!-- Nomor urut otomatis -->
                             <td></td>
 
-                            <td>
-                                <?= htmlspecialchars($row['nip']) ?>
-                            </td>
-
-                            <td>
-                                <?= htmlspecialchars($row['nama']) ?>
-                            </td>
-
-                            <td>
-                                <?= htmlspecialchars($row['email']) ?>
-                            </td>
+                            <!-- ID asli database -->
+                            <td><?= htmlspecialchars($row['nip'] ?? ''); ?></td>
+                            <td><?= htmlspecialchars($row['nama'] ?? ''); ?></td>
+                            <td><?= htmlspecialchars($row['email'] ?? ''); ?></td>
 
                             <td>
                                 <?php if ($row['status_aktif'] == 1) { ?>
-                                    <span class="badge bg-success">Aktif</span>
+                                    <span class="badge badge-success">Aktif</span>
                                 <?php } else { ?>
-                                    <span class="badge bg-danger">Tidak Aktif</span>
+                                    <span class="badge badge-secondary">Tidak Aktif</span>
                                 <?php } ?>
                             </td>
 
-                            <td>
-                                <?= htmlspecialchars($row['created_at'] ?? '') ?>
-                            </td>
+                            <td><?= htmlspecialchars($row['created_at'] ?? ''); ?></td>
+                            <td><?= htmlspecialchars($row['updated_at'] ?? ''); ?></td>
 
                             <td>
-                                <?= htmlspecialchars($row['updated_at'] ?? '') ?>
-                            </td>
-
-                            <td>
-                                <a href="edit_guru.php?id=<?= urlencode($row['id']) ?>"
+                                <a href="edit_guru.php?id=<?= urlencode($row['id']); ?>"
                                    class="btn btn-primary btn-sm mb-1">
                                     Edit
                                 </a>
 
-                                <a href="hapus_guru.php?id=<?= urlencode($row['id']) ?>"
+                                <a href="hapus_guru.php?id=<?= urlencode($row['id']); ?>"
                                    class="btn btn-danger btn-sm mb-1"
                                    onclick="return confirm('Yakin ingin menghapus data guru ini?');">
                                     Hapus
@@ -130,66 +117,57 @@ if (!$hasil) {
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-<!-- DataTables -->
-<script src="https://cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/2.3.4/js/dataTables.bootstrap5.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- JavaScript DataTables -->
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js"></script>
+
 <script>
 $(document).ready(function () {
-
-    var tabel = $('#tabelGuru').DataTable({
+    $('#tabelGuru').DataTable({
         pageLength: 10,
         lengthMenu: [5, 10, 25, 50, 100],
-        order: [[2, 'asc']],
+        ordering: true,
+        searching: true,
 
-        columnDefs: [
-            {
-                targets: 0,
-                orderable: false,
-                searchable: false
-            },
-            {
-                targets: 7,
-                orderable: false,
-                searchable: false
-            }
-        ],
+        // Urutan awal berdasarkan nama guru
+        order: [[3, 'asc']],
 
         language: {
-            search: "Cari:",
             lengthMenu: "Tampilkan _MENU_ data",
+            zeroRecords: "Data guru tidak ditemukan",
+            emptyTable: "Belum ada data guru",
             info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
             infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
             infoFiltered: "(difilter dari _MAX_ total data)",
-            zeroRecords: "Data tidak ditemukan",
-            emptyTable: "Belum ada data guru",
+            search: "Cari guru:",
             paginate: {
                 first: "Pertama",
                 last: "Terakhir",
                 next: "Selanjutnya",
                 previous: "Sebelumnya"
             }
+        },
+
+        // Kolom No tidak ikut diurutkan atau dicari
+        columnDefs: [{
+            targets: 0,
+            orderable: false,
+            searchable: false
+        }],
+
+        // Nomor menyesuaikan data yang sedang ditampilkan
+        drawCallback: function () {
+            const api = this.api();
+            const info = api.page.info();
+
+            api.column(0, { page: 'current' }).nodes().each(function (cell, i) {
+                cell.innerHTML = info.start + i + 1;
+            });
         }
     });
-
-    // Mengatur nomor urut berdasarkan data yang tampil
-    function nomorUrut() {
-        tabel.column(0, {
-            search: 'applied',
-            order: 'applied'
-        }).nodes().each(function (cell, i) {
-            cell.textContent = i + 1;
-        });
-    }
-
-    // Perbarui nomor saat pencarian, pengurutan, atau halaman berubah
-    tabel.on('draw.dt', function () {
-        nomorUrut();
-    });
-
-    nomorUrut();
-
 });
 </script>
 

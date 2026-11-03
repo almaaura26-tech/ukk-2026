@@ -119,7 +119,7 @@ $total_kelas = $data_kelas['total'];
                                 <?= $total_siswa ?>
                             </h2>
 
-                            <a href="kelola_siswa.php"
+                            <a href="kelola_tahun_ajaran.php"
                                class="btn btn-light btn-sm">
                                 Lihat Data Tahun Ajaran
                             </a>
@@ -128,7 +128,7 @@ $total_kelas = $data_kelas['total'];
                 </div>
                 <!-- CARD DATA SISWA -->
                 <div class="col-md-4 mb-3">
-                    <div class="card shadow-sm bg-info text-white">
+                    <div class="card shadow-sm bg-success text-white">
                         <div class="card-body">
                             <h5 class="card-title">Data Wali Kelas</h5>
 
@@ -138,22 +138,39 @@ $total_kelas = $data_kelas['total'];
 
                             <a href="kelola_wali_kelas.php"
                                class="btn btn-light btn-sm">
-                                Lihat Data Tahun Ajaran
+                                Lihat Data Wali Kelas
                             </a>
                         </div>
                     </div>
                 </div>
                 <!-- CARD DATA SISWA -->
                 <div class="col-md-4 mb-3">
-                    <div class="card shadow-sm bg-info text-white">
+                    <div class="card shadow-sm bg-primary text-white">
                         <div class="card-body">
-                            <h5 class="card-title">Data Wali Kelas</h5>
+                            <h5 class="card-title">Penempatan siswa</h5>
 
                             <h2>
                                 <?= $total_siswa ?>
                             </h2>
 
-                            <a href="kelola_wali_kelas.php"
+                            <a href="penempatan_siswa.php"
+                               class="btn btn-light btn-sm">
+                                Lihat Data Penempatan siswa
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                 <!-- CARD DATA SISWA -->
+                <div class="col-md-4 mb-3">
+                    <div class="card shadow-sm bg-warning text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Penempatan siswa</h5>
+
+                            <h2>
+                                <?= $total_siswa ?>
+                            </h2>
+
+                            <a href="penempatan_siswa.php"
                                class="btn btn-light btn-sm">
                                 Lihat Data Tahun Ajaran
                             </a>

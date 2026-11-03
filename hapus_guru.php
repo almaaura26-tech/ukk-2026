@@ -1,33 +1,51 @@
 <?php
 // hapus_guru.php
-session_start();
 
 include 'includes/cek_session.php';
 include 'config/koneksi.php';
 
-$id = $_GET['id'];
+// Ambil ID guru
+$id = $_GET['id'] ?? '';
 
-// Ambil nama guru sebelum dihapus
-$cek = mysqli_query(
-    $koneksi,
-    "SELECT nama FROM t_guru WHERE id = '$id'"
-);
-
-$data = mysqli_fetch_assoc($cek);
-
-// Hapus data guru
-$sql = "DELETE FROM t_guru WHERE id = '$id'";
-
-if (mysqli_query($koneksi, $sql)) {
-
-    $id_user = $_SESSION['id_user'];
-    $waktu = date('Y-m-d H:i:s');
-
-    $aktivitas = "hapus guru: " . $data['nama'];
-
+if ($id === '' || !ctype_digit((string) $id)) {
+    header('Location: kelola_guru.php');
+    exit;
 }
 
-// Kembali ke halaman kelola guru
-header('Location: kelola_guru.php');
-exit;
+// Pastikan kelola guru tersedia
+$stmt = mysqli_prepare(
+    $koneksi,
+    "SELECT id FROM t_guru WHERE id = ?"
+);
+
+mysqli_stmt_bind_param($stmt, "i", $id);
+mysqli_stmt_execute($stmt);
+
+$hasil = mysqli_stmt_get_result($stmt);
+$kelola = mysqli_fetch_assoc($hasil);
+mysqli_stmt_close($stmt);
+
+if (!$kelola) {
+    header('Location: kelola_guru.php');
+    exit;
+}
+
+// Hapus kelola guru
+$stmt = mysqli_prepare(
+    $koneksi,
+    "DELETE FROM t_guru WHERE id = ?"
+);
+
+mysqli_stmt_bind_param($stmt, "i", $id);
+
+if (mysqli_stmt_execute($stmt)) {
+    mysqli_stmt_close($stmt);
+
+    header('Location: kelola_guru.php');
+    exit;
+}
+
+mysqli_stmt_close($stmt);
+
+die('Gagal menghapus kelola guru.');
 ?>

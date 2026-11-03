@@ -4,7 +4,7 @@ session_start();
 include "config/koneksi.php";
 
 $nama = "Alma Aura Livia";
-$kelas = "XI RPL";
+$kelas = "XII RPL";
 $sekolah = "SMK Muhammadiyah Tasikmalaya";
 $jurusan = "Rekayasa Perangkat Lunak";
 $hobi = "Mendengarkan Musik";
