@@ -1,150 +1,180 @@
-
 <?php
-// proses_tambah_guru.php
-
 include 'includes/cek_session.php';
 include 'config/koneksi.php';
 
-// Pastikan form dikirim menggunakan POST
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: tambah_guru.php');
-    exit;
-}
-
-// Ambil data dari form
-$nip = trim($_POST['nip'] ?? '');
-$nama = trim($_POST['nama'] ?? '');
-$email = trim($_POST['email'] ?? '');
+// Mengambil data dari form
+$nip = $_POST['nip'] ?? '';
+$nama = $_POST['nama'] ?? '';
+$email = $_POST['email'] ?? '';
 $password = $_POST['password'] ?? '';
-$konfirmasi_password = $_POST['konfirmasi_password'] ?? '';
-$status_aktif = $_POST['status_aktif'] ?? '';
+$konfirmasi = $_POST['konfirmasi_password'] ?? '';
+$status_aktif = $_POST['status_aktif'] ?? '1';
 
-// Fungsi untuk kembali ke form dengan notifikasi
-function kembaliKeForm($pesan, $nip = '', $nama = '', $email = '')
-{
-    $parameter = [
-        'pesan' => $pesan,
-        'nip' => $nip,
-        'nama' => $nama,
-        'email' => $email
-    ];
-
-    header('Location: tambah_guru.php?' . http_build_query($parameter));
+// Validasi data
+if (empty($nip)) {
+    header("Location: tambah_guru.php?pesan=nip_kosong");
     exit;
 }
 
-// Validasi NIP kosong
-if ($nip === '') {
-    kembaliKeForm('nip_kosong', $nip, $nama, $email);
-}
-
-// Validasi NIP harus 18 digit angka
 if (!preg_match('/^[0-9]{18}$/', $nip)) {
-    kembaliKeForm('nip_tidak_valid', $nip, $nama, $email);
+    header("Location: tambah_guru.php?pesan=nip_tidak_valid");
+    exit;
 }
 
-// Validasi nama
-if ($nama === '') {
-    kembaliKeForm('nama_kosong', $nip, $nama, $email);
+if (empty($nama)) {
+    header("Location: tambah_guru.php?pesan=nama_kosong");
+    exit;
 }
 
-// Validasi email
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    kembaliKeForm('email_tidak_valid', $nip, $nama, $email);
+    header("Location: tambah_guru.php?pesan=email_tidak_valid");
+    exit;
 }
 
-// Validasi password
-if ($password === '') {
-    kembaliKeForm('password_kosong', $nip, $nama, $email);
+if (empty($password)) {
+    header("Location: tambah_guru.php?pesan=password_kosong");
+    exit;
 }
 
-// Validasi konfirmasi password
-if ($password !== $konfirmasi_password) {
-    kembaliKeForm('password_tidak_cocok', $nip, $nama, $email);
+if ($password !== $konfirmasi) {
+    header("Location: tambah_guru.php?pesan=password_tidak_cocok");
+    exit;
 }
 
-// Validasi status aktif
-if (!in_array((string)$status_aktif, ['0', '1'], true)) {
-    kembaliKeForm('gagal', $nip, $nama, $email);
-}
-
-// Periksa apakah NIP sudah terdaftar
-$stmt = mysqli_prepare(
-    $koneksi,
+// Cek NIP
+$cek_nip = mysqli_prepare($koneksi,
     "SELECT nip FROM t_guru WHERE nip = ?"
 );
+mysqli_stmt_bind_param($cek_nip, "s", $nip);
+mysqli_stmt_execute($cek_nip);
 
-if (!$stmt) {
-    kembaliKeForm('gagal', $nip, $nama, $email);
-}
-
-mysqli_stmt_bind_param($stmt, 's', $nip);
-mysqli_stmt_execute($stmt);
-mysqli_stmt_store_result($stmt);
-
-$nip_ada = mysqli_stmt_num_rows($stmt) > 0;
-
-mysqli_stmt_close($stmt);
-
-if ($nip_ada) {
-    kembaliKeForm('nip_terdaftar', $nip, $nama, $email);
-}
-
-// Periksa apakah email sudah terdaftar
-$stmt = mysqli_prepare(
-    $koneksi,
-    "SELECT email FROM t_guru WHERE email = ?"
-);
-
-if (!$stmt) {
-    kembaliKeForm('gagal', $nip, $nama, $email);
-}
-
-mysqli_stmt_bind_param($stmt, 's', $email);
-mysqli_stmt_execute($stmt);
-mysqli_stmt_store_result($stmt);
-
-$email_ada = mysqli_stmt_num_rows($stmt) > 0;
-
-mysqli_stmt_close($stmt);
-
-if ($email_ada) {
-    kembaliKeForm('email_terdaftar', $nip, $nama, $email);
-}
-
-// Enkripsi password sebelum disimpan
-$password_hash = password_hash($password, PASSWORD_DEFAULT);
-
-// Simpan data guru
-$stmt = mysqli_prepare(
-    $koneksi,
-    "INSERT INTO t_guru (nip, nama, email, password, status_aktif)
-     VALUES (?, ?, ?, ?, ?)"
-);
-
-if (!$stmt) {
-    kembaliKeForm('gagal', $nip, $nama, $email);
-}
-
-mysqli_stmt_bind_param(
-    $stmt,
-    'ssssi',
-    $nip,
-    $nama,
-    $email,
-    $password_hash,
-    $status_aktif
-);
-
-$berhasil = mysqli_stmt_execute($stmt);
-
-mysqli_stmt_close($stmt);
-
-if ($berhasil) {
-    header('Location: tambah_guru.php?pesan=berhasil');
+if (mysqli_stmt_get_result($cek_nip)->num_rows > 0) {
+    header("Location: tambah_guru.php?pesan=nip_terdaftar");
     exit;
 }
 
-// Jika penyimpanan gagal
-kembaliKeForm('gagal', $nip, $nama, $email);
+// Cek email di t_users
+$cek_email = mysqli_prepare($koneksi,
+    "SELECT id, role FROM t_users WHERE email = ?"
+);
+
+mysqli_stmt_bind_param($cek_email, "s", $email);
+mysqli_stmt_execute($cek_email);
+
+$result = mysqli_stmt_get_result($cek_email);
+$user = mysqli_fetch_assoc($result);
+
+// Jika email milik admin, tolak
+if ($user && $user['role'] != 'guru') {
+    header("Location: tambah_guru.php?pesan=email_terdaftar");
+    exit;
+}
+
+try {
+    mysqli_begin_transaction($koneksi);
+
+    if ($user) {
+        // Gunakan akun guru yang sudah ada
+        $user_id = $user['id'];
+
+    } else {
+        // Buat akun baru
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        $role = 'guru';
+
+        $sql_user = mysqli_prepare($koneksi,
+            "INSERT INTO t_users
+            (name, email, password, role, created_at, updated_at)
+            VALUES (?, ?, ?, ?, NOW(), NOW())"
+        );
+
+        mysqli_stmt_bind_param(
+            $sql_user, "ssss", $nama, $email, $hash, $role
+        );
+
+        mysqli_stmt_execute($sql_user);
+
+        $user_id = mysqli_insert_id($koneksi);
+    }
+
+    // Simpan data guru
+    $sql_guru = mysqli_prepare($koneksi,
+        "INSERT INTO t_guru
+        (user_id, nip, nama, email, status_aktif)
+        VALUES (?, ?, ?, ?, ?)"
+    );
+
+    $status_aktif = (int) $status_aktif;
+
+    mysqli_stmt_bind_param(
+        $sql_guru, "isssi",
+        $user_id, $nip, $nama, $email, $status_aktif
+    );
+
+    mysqli_stmt_execute($sql_guru);
+
+    mysqli_commit($koneksi);
+
+    header("Location: kelola_guru.php?pesan=berhasil");
+    exit;
+
+} catch (Throwable $e) {
+    mysqli_rollback($koneksi);
+
+    header("Location: tambah_guru.php?pesan=gagal");
+    exit;
+}
+
+// Membuat akun dan data guru
+try {
+    mysqli_begin_transaction($koneksi);
+
+    // Membuat akun user
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+    $role = 'guru';
+
+    $sql_user = mysqli_prepare($koneksi,
+        "INSERT INTO t_users
+        (name, email, password, role, created_at, updated_at)
+        VALUES (?, ?, ?, ?, NOW(), NOW())"
+    );
+
+    mysqli_stmt_bind_param(
+        $sql_user, "ssss", $nama, $email, $hash, $role
+    );
+
+    mysqli_stmt_execute($sql_user);
+
+    // Mengambil ID user yang baru dibuat
+    $user_id = mysqli_insert_id($koneksi);
+
+    // Memasukkan data guru
+    $sql_guru = mysqli_prepare($koneksi,
+        "INSERT INTO t_guru
+        (user_id, nip, nama, email, status_aktif)
+        VALUES (?, ?, ?, ?, ?)"
+    );
+
+    $status_aktif = (int) $status_aktif;
+
+    mysqli_stmt_bind_param(
+        $sql_guru, "isssi",
+        $user_id, $nip, $nama, $email, $status_aktif
+    );
+
+    mysqli_stmt_execute($sql_guru);
+
+    // Simpan kedua data
+    mysqli_commit($koneksi);
+
+    header("Location: kelola_guru.php?pesan=berhasil");
+    exit;
+
+} catch (Throwable $e) {
+
+    mysqli_rollback($koneksi);
+
+    header("Location: tambah_guru.php?pesan=gagal");
+    exit;
+}
 ?>

@@ -173,11 +173,12 @@ if (!empty($_SESSION['pesan_sukses'])) {
 <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js"></script>
 
 <!-- Pengaturan DataTables -->
+
 <script>
 $(document).ready(function () {
 
     var tabel = $('#tabelSiswa').DataTable({
-        pageLength: 10,
+        pageLength: 5,
         lengthMenu: [5, 10, 25, 50, 100],
         order: [[3, 'asc']],
 
@@ -203,8 +204,24 @@ $(document).ready(function () {
                 next: "Selanjutnya",
                 previous: "Sebelumnya"
             }
+        },
+
+        drawCallback: function () {
+            var api = this.api();
+            var info = api.page.info();
+
+            api.column(0, {
+                page: 'current'
+            }).nodes().each(function (cell, i) {
+                cell.innerHTML = info.start + i + 1;
+            });
         }
+
     });
+
+});
+</script>
+
 
     // Nomor otomatis dan berurutan
     function nomorUrut() {

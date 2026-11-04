@@ -9,6 +9,33 @@ $hasil = mysqli_query($koneksi, $sql);
 if (!$hasil) {
     die("Query gagal: " . mysqli_error($koneksi));
 }
+
+// Notifikasi berhasil atau gagal
+$pesan = $_GET['pesan'] ?? '';
+$notifikasi = '';
+$jenis_notifikasi = 'success';
+
+if ($pesan === 'edit') {
+    $notifikasi = 'Data siswa berhasil diperbarui.';
+} elseif ($pesan === 'hapus' || $pesan === 'hapus_berhasil') {
+    $notifikasi = 'Data siswa berhasil dihapus.';
+} elseif ($pesan === 'tambah') {
+    $notifikasi = 'Data siswa berhasil ditambahkan.';
+} elseif ($pesan === 'hapus_gagal') {
+    $notifikasi = 'Data siswa gagal dihapus atau tidak ditemukan.';
+    $jenis_notifikasi = 'danger';
+}
+
+// Notifikasi dari session
+if (!empty($_SESSION['pesan_sukses'])) {
+    $notifikasi = $_SESSION['pesan_sukses'];
+    $jenis_notifikasi = 'success';
+    unset($_SESSION['pesan_sukses']);
+} elseif (!empty($_SESSION['pesan_error'])) {
+    $notifikasi = $_SESSION['pesan_error'];
+    $jenis_notifikasi = 'danger';
+    unset($_SESSION['pesan_error']);
+}
 ?>
 
 <!DOCTYPE html>

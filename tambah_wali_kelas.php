@@ -1,6 +1,7 @@
 
 <?php
 // tambah_wali_kelas.php
+
 include 'includes/cek_session.php';
 include 'config/koneksi.php';
 
@@ -21,6 +22,11 @@ $guru = mysqli_query(
     $koneksi,
     "SELECT id, nama FROM t_guru ORDER BY nama ASC"
 );
+
+// Periksa query
+if (!$tahun || !$kelas || !$guru) {
+    die("Query gagal: " . mysqli_error($koneksi));
+}
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +38,6 @@ $guru = mysqli_query(
 
     <title>Tambah Wali Kelas</title>
 
-    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
           rel="stylesheet">
 </head>
@@ -42,10 +47,8 @@ $guru = mysqli_query(
 <div class="container-fluid">
     <div class="row">
 
-        <!-- SIDEBAR -->
         <?php include 'layout/sidebar.php'; ?>
 
-        <!-- KONTEN UTAMA -->
         <main class="col-md-9 col-lg-10 p-4">
 
             <h1 class="mb-4">Tambah Wali Kelas</h1>
@@ -53,7 +56,7 @@ $guru = mysqli_query(
             <div class="card shadow-sm">
 
                 <div class="card-header bg-primary text-white">
-                    Form Tambah Wali Kelas
+                    <h5 class="mb-0">Form Tambah Wali Kelas</h5>
                 </div>
 
                 <div class="card-body">

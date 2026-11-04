@@ -8,22 +8,28 @@ $nip = $_POST['nip'];
 $nama = $_POST['nama'];
 $email = $_POST['email'];
 $status_aktif = $_POST['status_aktif'];
-$user_id = $_POST['user_id'];
+
+if ($nip == '' || $nama == '' || $email == '') {
+    $_SESSION['pesan_error'] = "Semua data harus diisi!";
+    header("Location: edit_guru.php?id=$id");
+    exit;
+}
 
 $sql = "UPDATE t_guru SET
         nip = '$nip',
         nama = '$nama',
         email = '$email',
         status_aktif = '$status_aktif',
-        user_id = '$user_id'
+        updated_at = NOW()
         WHERE id = '$id'";
 
-$hasil = mysqli_query($koneksi, $sql);
-
-if ($hasil) {
+if (mysqli_query($koneksi, $sql)) {
+    $_SESSION['pesan_sukses'] = "Data guru berhasil diubah!";
     header("Location: kelola_guru.php");
     exit;
 } else {
-    echo "Gagal mengubah data guru: " . mysqli_error($koneksi);
+    $_SESSION['pesan_error'] = "Data guru gagal diubah!";
+    header("Location: edit_guru.php?id=$id");
+    exit;
 }
 ?>

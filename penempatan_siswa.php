@@ -286,7 +286,7 @@ $hasil = mysqli_query($koneksi, $sql);
                                                     Aktif
                                                 </span>
                                             <?php } else { ?>
-                                                <span class="badge bg-secondary">
+                                                <span class="badge bg-danger">
                                                     Tidak Aktif
                                                 </span>
                                             <?php } ?>
