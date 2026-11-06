@@ -112,7 +112,7 @@ $siswa = mysqli_fetch_assoc($data);
                             Simpan Perubahan
                         </button>
 
-                        <a href="kelola_siswa.php" class="btn btn-secondary">
+                        <a href="kelola_siswa.php" class="btn btn-danger">
                             Kembali
                         </a>
 

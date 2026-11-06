@@ -128,7 +128,7 @@ $tahun = mysqli_query($koneksi, "SELECT id, nama FROM t_tahun_ajaran ORDER BY na
                             Update Penempatan
                         </button>
 
-                        <a href="penempatan_siswa.php" class="btn btn-secondary">
+                        <a href="penempatan_siswa.php" class="btn btn-danger">
                             Kembali
                         </a>
 

@@ -93,7 +93,7 @@ if (!empty($_SESSION['pesan_sukses'])) {
                 </a>
 
                 <a href="tambah_siswa.php" class="btn btn-success">
-                    Tambah Siswa
+                    + Tambah Siswa
                 </a>
             </p>
 

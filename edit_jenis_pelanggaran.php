@@ -80,7 +80,7 @@ if (!$data) {
                             Update Jenis Pelanggaran
                         </button>
 
-                        <a href="kelola_jenis_pelanggaran.php" class="btn btn-secondary">
+                        <a href="kelola_jenis_pelanggaran.php" class="btn btn-danger">
                             Kembali
                         </a>
 

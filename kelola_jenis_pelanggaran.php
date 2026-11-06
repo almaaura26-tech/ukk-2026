@@ -26,8 +26,36 @@ if (!$hasil) {
     die("Gagal mengambil data: " .
         htmlspecialchars(mysqli_error($koneksi)));
 }
-?>
+// Notifikasi berhasil atau gagal
+$pesan = $_GET['pesan'] ?? '';
+$notifikasi = '';
+$jenis_notifikasi = 'success';
 
+if ($pesan === 'edit') {
+    $notifikasi = 'Data guru berhasil diperbarui.';
+} elseif ($pesan === 'hapus' || $pesan === 'hapus_berhasil') {
+    $notifikasi = 'Data guru berhasil dihapus.';
+} elseif ($pesan === 'tambah') {
+    $notifikasi = 'Data guru berhasil ditambahkan.';
+} elseif ($pesan === 'hapus_gagal') {
+    $notifikasi = 'Data guru gagal dihapus atau tidak ditemukan.';
+    $jenis_notifikasi = 'danger';
+} elseif ($pesan === 'gagal') {
+    $notifikasi = 'Data guru gagal diproses.';
+    $jenis_notifikasi = 'danger';
+}
+
+// Notifikasi dari session
+if (!empty($_SESSION['pesan_sukses'])) {
+    $notifikasi = $_SESSION['pesan_sukses'];
+    $jenis_notifikasi = 'success';
+    unset($_SESSION['pesan_sukses']);
+} elseif (!empty($_SESSION['pesan_error'])) {
+    $notifikasi = $_SESSION['pesan_error'];
+    $jenis_notifikasi = 'danger';
+    unset($_SESSION['pesan_error']);
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>

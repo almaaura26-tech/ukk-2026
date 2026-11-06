@@ -1,4 +1,3 @@
-
 <?php
 // edit_tahun_ajaran.php
 include 'includes/cek_session.php';
@@ -136,7 +135,7 @@ if (!$data) {
                         </button>
 
                         <a href="kelola_tahun_ajaran.php"
-                           class="btn btn-secondary">
+                           class="btn btn-danger">
                             Kembali
                         </a>
 

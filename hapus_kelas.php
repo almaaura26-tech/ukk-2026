@@ -1,33 +1,44 @@
+
 <?php
 // hapus_kelas.php
-session_start();
-
 include 'includes/cek_session.php';
 include 'config/koneksi.php';
 
-$id = $_GET['id'];
-
-// Ambil nama kelas sebelum dihapus
-$cek = mysqli_query(
-    $koneksi,
-    "SELECT nama FROM t_kelas WHERE id = '$id'"
-);
-
-$data = mysqli_fetch_assoc($cek);
-
-// Hapus data kelas
-$sql = "DELETE FROM t_kelas WHERE id = '$id'";
-
-if (mysqli_query($koneksi, $sql)) {
-
-    $id_user = $_SESSION['id_user'];
-    $waktu = date('Y-m-d H:i:s');
-
-    $aktivitas = "hapus kelas: " . $data['nama'];
-
+// Periksa ID
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    header("Location: kelola_kelas.php?pesan=hapus_gagal");
+    exit;
 }
 
-// Kembali ke halaman kelola siswa
-header('Location: kelola_kelas.php');
-exit;
+$id = (int) $_GET['id'];
+
+// Ambil nama kelas sebelum dihapus
+$stmt = mysqli_prepare($koneksi, "SELECT nama FROM t_kelas WHERE id = ?");
+mysqli_stmt_bind_param($stmt, "i", $id);
+mysqli_stmt_execute($stmt);
+
+$hasil = mysqli_stmt_get_result($stmt);
+$data = mysqli_fetch_assoc($hasil);
+
+if (!$data) {
+    header("Location: kelola_kelas.php?pesan=hapus_gagal");
+    exit;
+}
+
+// Hapus data kelas
+$stmt_hapus = mysqli_prepare($koneksi, "DELETE FROM t_kelas WHERE id = ?");
+mysqli_stmt_bind_param($stmt_hapus, "i", $id);
+
+if (mysqli_stmt_execute($stmt_hapus) && mysqli_stmt_affected_rows($stmt_hapus) > 0) {
+
+    // Notifikasi berhasil
+    header("Location: kelola_kelas.php?pesan=hapus");
+    exit;
+
+} else {
+
+    // Notifikasi gagal
+    header("Location: kelola_kelas.php?pesan=hapus_gagal");
+    exit;
+}
 ?>

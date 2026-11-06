@@ -1,8 +1,10 @@
+
 <?php
 // kelola_guru.php
 include 'includes/cek_session.php';
 include 'config/koneksi.php';
 
+// Ambil data guru
 $sql = "SELECT * FROM t_guru ORDER BY nama ASC";
 $hasil = mysqli_query($koneksi, $sql);
 
@@ -16,13 +18,16 @@ $notifikasi = '';
 $jenis_notifikasi = 'success';
 
 if ($pesan === 'edit') {
-    $notifikasi = 'Data siswa berhasil diperbarui.';
+    $notifikasi = 'Data guru berhasil diperbarui.';
 } elseif ($pesan === 'hapus' || $pesan === 'hapus_berhasil') {
-    $notifikasi = 'Data siswa berhasil dihapus.';
+    $notifikasi = 'Data guru berhasil dihapus.';
 } elseif ($pesan === 'tambah') {
-    $notifikasi = 'Data siswa berhasil ditambahkan.';
+    $notifikasi = 'Data guru berhasil ditambahkan.';
 } elseif ($pesan === 'hapus_gagal') {
-    $notifikasi = 'Data siswa gagal dihapus atau tidak ditemukan.';
+    $notifikasi = 'Data guru gagal dihapus atau tidak ditemukan.';
+    $jenis_notifikasi = 'danger';
+} elseif ($pesan === 'gagal') {
+    $notifikasi = 'Data guru gagal diproses.';
     $jenis_notifikasi = 'danger';
 }
 
@@ -60,20 +65,39 @@ if (!empty($_SESSION['pesan_sukses'])) {
 <div class="container-fluid">
     <div class="row">
 
+        <!-- SIDEBAR -->
         <?php include 'layout/sidebar.php'; ?>
 
+        <!-- KONTEN UTAMA -->
         <main class="col-md-9 col-lg-10 p-4">
 
             <h1>Kelola Guru</h1>
             <p>Selamat datang di halaman Kelola Guru.</p>
 
+            <!-- NOTIFIKASI -->
+            <?php if ($notifikasi !== '') { ?>
+                <div class="alert alert-<?= htmlspecialchars($jenis_notifikasi) ?> alert-dismissible fade show"
+                     role="alert">
+
+                    <?= htmlspecialchars($notifikasi) ?>
+
+                    <button type="button"
+                            class="close"
+                            data-dismiss="alert"
+                            aria-label="Tutup">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+            <?php } ?>
+
+            <!-- TOMBOL -->
             <div class="mb-3">
                 <a href="dashboard.php" class="btn btn-primary">
                     Kembali ke Dashboard
                 </a>
 
-                <a href="tambah_guru.php"
-                   class="btn btn-success">
+                <a href="tambah_guru.php" class="btn btn-success">
                     + Tambah Guru
                 </a>
             </div>
@@ -102,29 +126,45 @@ if (!empty($_SESSION['pesan_sukses'])) {
                             <!-- Nomor urut otomatis -->
                             <td></td>
 
-                            <!-- ID asli database -->
-                            <td><?= htmlspecialchars($row['nip'] ?? ''); ?></td>
-                            <td><?= htmlspecialchars($row['nama'] ?? ''); ?></td>
-                            <td><?= htmlspecialchars($row['email'] ?? ''); ?></td>
+                            <td>
+                                <?= htmlspecialchars($row['nip'] ?? '') ?>
+                            </td>
+
+                            <td>
+                                <?= htmlspecialchars($row['nama'] ?? '') ?>
+                            </td>
+
+                            <td>
+                                <?= htmlspecialchars($row['email'] ?? '') ?>
+                            </td>
 
                             <td>
                                 <?php if ($row['status_aktif'] == 1) { ?>
-                                    <span class="badge badge-success">Aktif</span>
+                                    <span class="badge badge-success">
+                                        Aktif
+                                    </span>
                                 <?php } else { ?>
-                                    <span class="badge badge-secondary">Tidak Aktif</span>
+                                    <span class="badge badge-secondary">
+                                        Tidak Aktif
+                                    </span>
                                 <?php } ?>
                             </td>
 
-                            <td><?= htmlspecialchars($row['created_at'] ?? ''); ?></td>
-                            <td><?= htmlspecialchars($row['updated_at'] ?? ''); ?></td>
+                            <td>
+                                <?= htmlspecialchars($row['created_at'] ?? '') ?>
+                            </td>
 
                             <td>
-                                <a href="edit_guru.php?id=<?= urlencode($row['id']); ?>"
+                                <?= htmlspecialchars($row['updated_at'] ?? '') ?>
+                            </td>
+
+                            <td>
+                                <a href="edit_guru.php?id=<?= urlencode($row['id']) ?>"
                                    class="btn btn-primary btn-sm mb-1">
                                     Edit
                                 </a>
 
-                                <a href="hapus_guru.php?id=<?= urlencode($row['id']); ?>"
+                                <a href="hapus_guru.php?id=<?= urlencode($row['id']) ?>"
                                    class="btn btn-danger btn-sm mb-1"
                                    onclick="return confirm('Yakin ingin menghapus data guru ini?');">
                                     Hapus
@@ -153,14 +193,16 @@ if (!empty($_SESSION['pesan_sukses'])) {
 
 <script>
 $(document).ready(function () {
+
     $('#tabelGuru').DataTable({
+
         pageLength: 10,
         lengthMenu: [5, 10, 25, 50, 100],
         ordering: true,
         searching: true,
 
         // Urutan awal berdasarkan nama guru
-        order: [[3, 'asc']],
+        order: [[2, 'asc']],
 
         language: {
             lengthMenu: "Tampilkan _MENU_ data",
@@ -185,7 +227,7 @@ $(document).ready(function () {
             searchable: false
         }],
 
-        // Nomor menyesuaikan data yang sedang ditampilkan
+        // Nomor otomatis dan berurutan
         drawCallback: function () {
             const api = this.api();
             const info = api.page.info();
@@ -194,9 +236,12 @@ $(document).ready(function () {
                 cell.innerHTML = info.start + i + 1;
             });
         }
+
     });
+
 });
 </script>
 
 </body>
 </html>
+```
