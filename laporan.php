@@ -113,9 +113,12 @@ if (!$hasil) {
 
         <!-- KONTEN UTAMA -->
         <main class="col-12 col-md-9 col-lg-10 p-3 p-md-4">
+             <h1>Laporan</h1>
+            <p>Selamat datang di halaman Laporan.</p>
+
 
             <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
-                <h3 class="mb-2">Laporan Pelanggaran Siswa</h3>
+                <class="mb-2">
 
                 <div class="mb-2">
                     <button type="button"

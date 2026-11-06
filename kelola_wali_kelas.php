@@ -212,7 +212,7 @@ $(document).ready(function () {
             info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
             infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
             infoFiltered: "(difilter dari _MAX_ total data)",
-            search: "Cari wali kelas:",
+            search: "Cari:",
             paginate: {
                 first: "Pertama",
                 last: "Terakhir",

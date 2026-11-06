@@ -44,7 +44,7 @@ if (isset($_SESSION['pesan_error'])) {
 
                 <div class="card-header bg-primary text-white text-center py-4">
                     <h3 class="font-weight-bold mb-2">
-                        🔐 Login
+                         Login
                     </h3>
 
                     <p class="mb-0">

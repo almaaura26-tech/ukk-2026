@@ -41,8 +41,8 @@ if (!$hasil) {
         <!-- KONTEN -->
         <main class="col-md-9 col-lg-10 p-4">
 
-            <h2 class="mb-4">Data Kategori Pelanggaran</h2>
-             <p>Selamat datang di halaman prlanggaran kategori.</p>
+            <h2>Data Kategori Pelanggaran</h2>
+             <p>Selamat datang di halaman pelanggaran kategori.</p>
 
             <div class="mb-3">
                 <a href="dashboard.php" class="btn btn-primary">

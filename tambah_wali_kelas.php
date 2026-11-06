@@ -1,32 +1,42 @@
-
 <?php
 // tambah_wali_kelas.php
-
 include 'includes/cek_session.php';
 include 'config/koneksi.php';
 
-// Ambil data tahun ajaran
+// 1. Mengambil tahun ajaran yang aktif
 $tahun = mysqli_query(
     $koneksi,
-    "SELECT id, nama FROM t_tahun_ajaran ORDER BY id DESC"
+    "SELECT id, nama
+     FROM t_tahun_ajaran
+     WHERE status_aktif = 1
+     ORDER BY id DESC"
 );
 
-// Ambil data kelas
+// 2. Mengambil kelas yang belum memiliki wali kelas
 $kelas = mysqli_query(
     $koneksi,
-    "SELECT id, nama FROM t_kelas ORDER BY nama ASC"
+    "SELECT id, nama
+     FROM t_kelas
+     WHERE id NOT IN (
+         SELECT kelas_id
+         FROM t_wali_kelas
+         WHERE status_aktif = 1
+     )
+     ORDER BY nama ASC"
 );
 
-// Ambil data guru
+// 3. Mengambil guru yang belum menjadi wali kelas
 $guru = mysqli_query(
     $koneksi,
-    "SELECT id, nama FROM t_guru ORDER BY nama ASC"
+    "SELECT id, nama
+     FROM t_guru
+     WHERE id NOT IN (
+         SELECT guru_id
+         FROM t_wali_kelas
+         WHERE status_aktif = 1
+     )
+     ORDER BY nama ASC"
 );
-
-// Periksa query
-if (!$tahun || !$kelas || !$guru) {
-    die("Query gagal: " . mysqli_error($koneksi));
-}
 ?>
 
 <!DOCTYPE html>
@@ -38,6 +48,7 @@ if (!$tahun || !$kelas || !$guru) {
 
     <title>Tambah Wali Kelas</title>
 
+    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
           rel="stylesheet">
 </head>
@@ -47,8 +58,10 @@ if (!$tahun || !$kelas || !$guru) {
 <div class="container-fluid">
     <div class="row">
 
+        <!-- SIDEBAR -->
         <?php include 'layout/sidebar.php'; ?>
 
+        <!-- KONTEN UTAMA -->
         <main class="col-md-9 col-lg-10 p-4">
 
             <h1 class="mb-4">Tambah Wali Kelas</h1>
@@ -56,7 +69,7 @@ if (!$tahun || !$kelas || !$guru) {
             <div class="card shadow-sm">
 
                 <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">Form Tambah Wali Kelas</h5>
+                    Form Tambah Wali Kelas
                 </div>
 
                 <div class="card-body">
