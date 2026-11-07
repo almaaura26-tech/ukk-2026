@@ -74,7 +74,6 @@ $hasil = mysqli_query($koneksi, $sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Penempatan Siswa</title>
-
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
           rel="stylesheet">
@@ -94,7 +93,9 @@ $hasil = mysqli_query($koneksi, $sql);
         <!-- KONTEN -->
         <main class="col-md-9 col-lg-10 p-4">
 
-            <h1 class="mb-4">Penempatan Siswa</h1>
+            <h1>Penempatan Siswa</h1>
+            <p>Selamat datang di halaman Penempatan Siswa.</p>
+
 
             <div class="mb-3">
                 <a href="dashboard.php" class="btn btn-primary">
@@ -303,15 +304,7 @@ $hasil = mysqli_query($koneksi, $sql);
             </div>
 
             <!-- TABEL DATA PENEMPATAN -->
-            <div class="card shadow-sm">
-
-                <div class="card-header">
-                    <h5 class="mb-0">Data Penempatan Siswa</h5>
-                </div>
-
-                <div class="card-body">
-
-                    <div class="table-responsive">
+            
 
                         <table id="tabelPenempatan"
                                class="table table-striped table-bordered table-hover align-middle w-100">
