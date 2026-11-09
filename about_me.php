@@ -54,7 +54,7 @@ $cita_cita = "POLWAN";
                             <div class="col-md-4 mb-3 mb-md-0 text-center">
 
                                 <!-- FOTO PROFIL BULAT -->
-                                <img src="img/almaa.jpg"
+                                <img src="img/alma.jpg"
                                      alt="Foto Profil"
                                      class="rounded-circle img-thumbnail shadow"
                                      style="width: 190px; height: 190px; object-fit: cover;">
@@ -169,7 +169,7 @@ $cita_cita = "POLWAN";
                         </p>
 
                         <a href="dashboard.php" class="btn btn-primary mt-2">
-                            &larr; Kembali ke Dashboard
+                         Kembali ke Dashboard
                         </a>
 
                     </div>

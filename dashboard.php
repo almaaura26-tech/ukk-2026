@@ -1,39 +1,59 @@
-
 <?php
-// dashboard.php
-include 'includes/cek_session.php';
-include 'config/koneksi.php';
+// Memeriksa session login
+include "includes/cek_session.php";
 
-// Menghitung jumlah data siswa
-$sql_siswa = "SELECT COUNT(*) AS total FROM t_siswa";
-$query_siswa = mysqli_query($koneksi, $sql_siswa);
-$data_siswa = mysqli_fetch_assoc($query_siswa);
-$total_siswa = $data_siswa['total'];
+// Mengambil data pengguna
+$nama = $_SESSION['nama'] ?? $_SESSION['nama_lengkap'] ?? '';
+$email = $_SESSION['email'] ?? '-';
+$role = $_SESSION['role'] ?? '-';
 
-// Menghitung jumlah data guru
-$sql_guru = "SELECT COUNT(*) AS total FROM t_guru";
-$query_guru = mysqli_query($koneksi, $sql_guru);
-$data_guru = mysqli_fetch_assoc($query_guru);
-$total_guru = $data_guru['total'];
+// Menghubungkan database
+include "config/koneksi.php";
 
-// Menghitung jumlah kelas
-$sql_kelas = "SELECT COUNT(*) AS total FROM t_kelas";
-$query_kelas = mysqli_query($koneksi, $sql_kelas);
-$data_kelas = mysqli_fetch_assoc($query_kelas);
-$total_kelas = $data_kelas['total'];
+// Menghitung jumlah data dari database
+function hitungData($koneksi, $tabel)
+{
+    $tabelDiizinkan = ['t_siswa', 't_guru', 't_kelas'];
+
+    if (!in_array($tabel, $tabelDiizinkan, true)) {
+        return 0;
+    }
+
+    $sql = "SELECT COUNT(*) AS total FROM `$tabel`";
+    $hasil = mysqli_query($koneksi, $sql);
+
+    if (!$hasil) {
+        die(
+            "Gagal menghitung data pada tabel " .
+            htmlspecialchars($tabel) .
+            ". Periksa nama tabel di database. Error: " .
+            htmlspecialchars(mysqli_error($koneksi))
+        );
+    }
+
+    $data = mysqli_fetch_assoc($hasil);
+
+    return (int) $data['total'];
+}
+
+// Jumlah data otomatis
+$total_siswa = hitungData($koneksi, 't_siswa');
+$total_guru = hitungData($koneksi, 't_guru');
+$total_kelas = hitungData($koneksi, 't_kelas');
 ?>
 
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Dashboard</title>
-
-    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+          rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+          crossorigin="anonymous">
+
+    <title>Dashboard</title>
 </head>
 
 <body>
@@ -41,21 +61,31 @@ $total_kelas = $data_kelas['total'];
 <div class="container-fluid">
     <div class="row">
 
-        <!-- SIDEBAR -->
-        <?php include "layout/sidebar.php"; ?>
+        <?php
+        include "layout/sidebar.php";
+        ?>
 
         <!-- KONTEN -->
         <main class="col-md-9 col-lg-10 p-4">
 
             <h2>Dashboard</h2>
 
-            <p>
-                Selamat datang di halaman dashboard.
-            </p>
+            <!-- Menampilkan data pengguna -->
+            <?php if ($role == 'guru') { ?>
 
-            <div class="row">
+                <p>Selamat datang di halaman dashboard guru <b><?php echo htmlspecialchars($nama); ?></b></p>
 
-                <!-- CARD DATA SISWA -->
+            <?php } else { ?>
+
+                <p>Selamat datang di halaman dashboard <b><?php echo htmlspecialchars($nama); ?></b></p>
+
+            <?php } ?>
+
+            <?php if ($role == 'admin') { ?>
+
+                <div class="row">
+
+                    <!-- CARD DATA SISWA -->
                 <div class="col-md-4 mb-3">
                     <div class="card shadow-sm bg-primary text-white">
                         <div class="card-body">
@@ -196,12 +226,69 @@ $total_kelas = $data_kelas['total'];
                 </div>
             </div>
 
+
+            <?php } elseif ($role == 'guru') { ?>
+
+                <ul class="nav nav-pills flex-column">
+
+             <!-- DASHBOARD GURU -->
+                <div class="row">
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm bg-primary text-white">
+                            <div class="card-body">
+                                <h5 class="card-title">Catat Pelanggaran</h5>
+                                <p>Mencatat pelanggaran siswa.</p>
+
+                                <a href="catat_pelanggaran.php"
+                                   class="btn btn-light btn-sm">
+                                    Catat Sekarang
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm bg-warning text-white">
+                            <div class="card-body">
+                                <h5 class="card-title">Riwayat Pelanggaran</h5>
+                                <p>Melihat riwayat pelanggaran siswa.</p>
+
+                                <a href="riwayat.php"
+                                   class="btn btn-light btn-sm">
+                                    Lihat Riwayat
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm bg-success text-white">
+                            <div class="card-body">
+                                <h5 class="card-title">Rekap Poin</h5>
+                                <p>Melihat jumlah poin pelanggaran.</p>
+
+                                <a href="rekap_poin.php"
+                                   class="btn btn-light btn-sm">
+                                    Lihat Rekap
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            <?php } else { ?>
+
+                <div class="alert alert-danger">
+                    Role pengguna tidak dikenali.
+                </div>
+
+            <?php } ?>
+
         </main>
+
     </div>
 </div>
-
-<!-- Bootstrap JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

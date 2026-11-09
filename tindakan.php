@@ -94,15 +94,8 @@ if (!$hasil) {
                 </div>
             <?php } ?>
 
-            <!-- TABEL DATA -->
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">Data Pelanggaran Siswa</h5>
-                </div>
-
-                <div class="card-body">
-                    <div class="table-responsive">
-
+           
+                  
                         <table id="tabelTindakan"
                                class="table table-striped table-bordered table-hover align-middle">
 
@@ -167,7 +160,7 @@ if (!$hasil) {
                                             <button
                                                 type="submit"
                                                 form="formTindakan<?= (int) $row['id']; ?>"
-                                                class="btn btn-d btn-sm">
+                                                class="btn btn-success btn-sm">
                                                 Simpan
                                             </button>
                                         </td>
