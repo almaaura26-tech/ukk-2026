@@ -87,7 +87,7 @@ $jumlah = mysqli_num_rows($query);
                     </p>
                 </div>
 
-                <a href="dashboard.php" class="btn btn-secondary">
+                <a href="dashboard.php" class="btn btn-primary">
                     Kembali ke Dashboard
                 </a>
             </div>
@@ -152,7 +152,7 @@ $jumlah = mysqli_num_rows($query);
                                     Cari
                                 </button>
 
-                                <a href="riwayat.php" class="btn btn-secondary">
+                                <a href="riwayat.php" class="btn btn-danger">
                                     Reset
                                 </a>
                             </div>
@@ -162,14 +162,7 @@ $jumlah = mysqli_num_rows($query);
                 </div>
             </div>
 
-            <!-- Tabel riwayat -->
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">Data Riwayat Pelanggaran</h5>
-                </div>
-
-                <div class="card-body">
-                    <div class="table-responsive">
+           
 
                         <table id="tabelRiwayat"
                                class="table table-striped table-bordered table-hover align-middle">

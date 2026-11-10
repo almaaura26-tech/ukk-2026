@@ -307,18 +307,7 @@ $jumlah_siswa = count($data_rekap);
                     </div>
                 </div>
 
-                <!-- TABEL REKAP -->
-                <div class="card shadow-sm">
-
-                    <!-- HEADER DIUBAH MENJADI HITAM -->
-                    <div class="card-header bg-dark text-white">
-                        <h5 class="mb-0">Data Rekap Poin Siswa</h5>
-                    </div>
-
-                    <div class="card-body">
-
-                        <div class="table-responsive">
-
+                
                             <table id="tabelRekap"
                                    class="table table-striped table-bordered table-hover align-middle w-100">
 

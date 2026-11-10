@@ -4,6 +4,7 @@
 include 'includes/cek_session.php';
 include 'config/koneksi.php';
 
+// Mengambil data siswa
 $sql = "SELECT * FROM t_siswa ORDER BY nama ASC";
 $hasil = mysqli_query($koneksi, $sql);
 
@@ -11,7 +12,7 @@ if (!$hasil) {
     die("Query gagal: " . mysqli_error($koneksi));
 }
 
-// Notifikasi berhasil atau gagal
+// Notifikasi
 $pesan = $_GET['pesan'] ?? '';
 $notifikasi = '';
 $jenis_notifikasi = 'success';
@@ -51,7 +52,7 @@ if (!empty($_SESSION['pesan_sukses'])) {
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
-    <!-- CSS DataTables Bootstrap 4 -->
+    <!-- DataTables Bootstrap 4 -->
     <link rel="stylesheet"
           href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap4.min.css">
 </head>
@@ -87,6 +88,7 @@ if (!empty($_SESSION['pesan_sukses'])) {
                 </div>
             <?php } ?>
 
+            <!-- TOMBOL -->
             <p>
                 <a href="dashboard.php" class="btn btn-primary">
                     Kembali ke Dashboard
@@ -99,6 +101,7 @@ if (!empty($_SESSION['pesan_sukses'])) {
 
             <!-- TABEL SISWA -->
             <div class="table-responsive">
+
                 <table id="tabelSiswa"
                        class="table table-bordered table-striped table-hover">
 
@@ -119,15 +122,22 @@ if (!empty($_SESSION['pesan_sukses'])) {
                     </thead>
 
                     <tbody>
+
                         <?php while ($row = mysqli_fetch_assoc($hasil)) { ?>
+
                         <tr>
                             <td></td>
 
                             <td><?= htmlspecialchars($row['nis']) ?></td>
+
                             <td><?= htmlspecialchars($row['nisn']) ?></td>
+
                             <td><?= htmlspecialchars($row['nama']) ?></td>
+
                             <td><?= htmlspecialchars($row['jenis_kelamin']) ?></td>
+
                             <td><?= htmlspecialchars($row['tanggal_lahir']) ?></td>
+
                             <td><?= htmlspecialchars($row['alamat']) ?></td>
 
                             <td>
@@ -136,8 +146,13 @@ if (!empty($_SESSION['pesan_sukses'])) {
                                     : 'Tidak Aktif' ?>
                             </td>
 
-                            <td><?= htmlspecialchars($row['created_at'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($row['updated_at'] ?? '') ?></td>
+                            <td>
+                                <?= htmlspecialchars($row['created_at'] ?? '') ?>
+                            </td>
+
+                            <td>
+                                <?= htmlspecialchars($row['updated_at'] ?? '') ?>
+                            </td>
 
                             <td>
                                 <a href="edit_siswa.php?id=<?= urlencode($row['id']) ?>"
@@ -152,10 +167,13 @@ if (!empty($_SESSION['pesan_sukses'])) {
                                 </a>
                             </td>
                         </tr>
+
                         <?php } ?>
+
                     </tbody>
 
                 </table>
+
             </div>
 
         </main>
@@ -168,18 +186,21 @@ if (!empty($_SESSION['pesan_sukses'])) {
 <!-- Bootstrap 4 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- JavaScript DataTables -->
+<!-- DataTables -->
 <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+
 <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js"></script>
 
-<!-- Pengaturan DataTables -->
-
+<!-- PENGATURAN DATATABLES -->
 <script>
 $(document).ready(function () {
 
     var tabel = $('#tabelSiswa').DataTable({
+
         pageLength: 5,
+
         lengthMenu: [5, 10, 25, 50, 100],
+
         order: [[3, 'asc']],
 
         columnDefs: [
@@ -206,37 +227,23 @@ $(document).ready(function () {
             }
         },
 
+        // NOMOR OTOMATIS DAN BERURUTAN
         drawCallback: function () {
+
             var api = this.api();
             var info = api.page.info();
 
             api.column(0, {
                 page: 'current'
             }).nodes().each(function (cell, i) {
+
                 cell.innerHTML = info.start + i + 1;
+
             });
+
         }
 
     });
-
-});
-</script>
-
-
-    // Nomor otomatis dan berurutan
-    function nomorUrut() {
-        var halaman = tabel.page.info().start;
-
-        tabel.column(0, {
-            search: 'applied',
-            order: 'applied'
-        }).nodes().each(function (cell, i) {
-            cell.textContent = halaman + i + 1;
-        });
-    }
-
-    tabel.on('draw.dt order.dt search.dt', nomorUrut);
-    nomorUrut();
 
 });
 </script>
