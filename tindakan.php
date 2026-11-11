@@ -187,7 +187,7 @@ if (!$hasil) {
                 Kelola tindakan untuk setiap pelanggaran siswa.
             </p>
 
-            <a href="dashboard.php" class="btn btn-secondary btn-sm mb-3">
+            <a href="dashboard.php" class="btn btn-primary btn-sm mb-3">
                 Kembali ke Dashboard
             </a>
 
@@ -218,14 +218,7 @@ if (!$hasil) {
             <?php } ?>
 
 
-            <!-- DATA PELANGGARAN -->
-            <div class="card">
-
-                <div class="card-header bg-primary text-white">
-
-                    <strong>Data Pelanggaran yang Belum Ditindak</strong>
-
-                </div>
+            
 
                 <div class="card-body">
 
