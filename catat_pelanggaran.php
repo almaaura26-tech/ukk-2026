@@ -16,7 +16,6 @@ $siswa = mysqli_query(
 
 // ==========================================
 // TAHUN AJARAN AKTIF
-// TETAP MENGGUNAKAN KODE LAMA
 // ==========================================
 $tahun = mysqli_query(
     $koneksi,
@@ -30,7 +29,6 @@ $tahun_aktif = mysqli_fetch_assoc($tahun);
 
 // ==========================================
 // DAFTAR PENEMPATAN KELAS SISWA
-// SESUAI TAHUN AJARAN AKTIF
 // ==========================================
 $daftar_penempatan = [];
 
@@ -146,6 +144,7 @@ $sql = "SELECT
         ORDER BY ps.id DESC";
 
 $hasil = mysqli_query($koneksi, $sql);
+
 ?>
 
 <!DOCTYPE html>
@@ -159,11 +158,16 @@ $hasil = mysqli_query($koneksi, $sql);
 
     <title>Catat Pelanggaran Siswa</title>
 
+    <!-- BOOTSTRAP 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
           rel="stylesheet">
 
     <!-- TOM SELECT -->
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.bootstrap5.min.css"
+          rel="stylesheet">
+
+    <!-- DATATABLES BOOTSTRAP 5 -->
+    <link href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.min.css"
           rel="stylesheet">
 
 </head>
@@ -223,7 +227,7 @@ $hasil = mysqli_query($koneksi, $sql);
             <?php } ?>
 
             <!-- FORM CATAT PELANGGARAN -->
-            <div class="card mb-4 ">
+            <div class="card mb-4">
 
                 <div class="card-header bg-primary text-light">
                     Form Catat Pelanggaran
@@ -270,7 +274,6 @@ $hasil = mysqli_query($koneksi, $sql);
                             </div>
 
                             <!-- TAHUN AJARAN OTOMATIS -->
-                            <!-- TIDAK DIUBAH -->
                             <div class="col-md-6 mb-3">
 
                                 <label class="form-label">
@@ -365,26 +368,6 @@ $hasil = mysqli_query($koneksi, $sql);
 
                             </div>
 
-
-
-                            <!-- GURU OTOMATIS -->
-                            <div class="col-md-6 mb-3">
-
-                                <label class="form-label">
-                                    Guru Pelapor
-                                </label>
-
-                                <input type="text"
-                                       class="form-control"
-                                       value="<?= htmlspecialchars($data_guru['nama'] ?? 'Guru tidak ditemukan'); ?>"
-                                       readonly>
-
-                                <input type="hidden"
-                                       name="guru_id"
-                                       value="<?= (int) $guru_id_login; ?>">
-
-                            </div>
-
                             <!-- TANGGAL -->
                             <div class="col-md-6 mb-3">
 
@@ -475,7 +458,9 @@ $hasil = mysqli_query($koneksi, $sql);
 
                     <div class="table-responsive">
 
-                        <table class="table table-bordered table-striped">
+                        <!-- ID DATATABLES DITAMBAHKAN -->
+                        <table id="tabelPelanggaran"
+                               class="table table-bordered table-striped">
 
                             <thead class="table-dark">
 
@@ -547,7 +532,7 @@ $hasil = mysqli_query($koneksi, $sql);
 
                                             <?php } else { ?>
 
-                                                <span class="badge bg-success">
+                                                <span class="badge bg-primary">
                                                     Ditindaklanjuti
                                                 </span>
 
@@ -609,8 +594,20 @@ $hasil = mysqli_query($koneksi, $sql);
 </div>
 
 
+<!-- JQUERY -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- BOOTSTRAP JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
 <!-- TOM SELECT -->
 <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
+
+<!-- DATATABLES JS -->
+<script src="https://cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/2.3.4/js/dataTables.bootstrap5.min.js"></script>
+
 
 <script>
 
@@ -712,6 +709,58 @@ document.getElementById('formPelanggaran')
         return false;
 
     }
+
+});
+
+
+// ==========================================
+// DATATABLES
+// ==========================================
+$(document).ready(function () {
+
+    $('#tabelPelanggaran').DataTable({
+
+        pageLength: 10,
+
+        lengthMenu: [5, 10, 25, 50, 100],
+
+        searching: true,
+
+        ordering: true,
+
+        paging: true,
+
+        language: {
+
+            search: "Cari:",
+
+            lengthMenu: "Tampilkan _MENU_ data",
+
+            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+
+            infoEmpty: "Tidak ada data",
+
+            infoFiltered: "(difilter dari _MAX_ total data)",
+
+            zeroRecords: "Data tidak ditemukan",
+
+            emptyTable: "Tidak ada data",
+
+            paginate: {
+
+                first: "Pertama",
+
+                previous: "Sebelumnya",
+
+                next: "Berikutnya",
+
+                last: "Terakhir"
+
+            }
+
+        }
+
+    });
 
 });
 
