@@ -426,12 +426,12 @@ $hasil = mysqli_query($koneksi, $sql);
                         </div>
 
                         <!-- TOMBOL -->
-                        <button type="submit"
-                                class="btn btn-primary"
+                        <button type="submit"class="btn btn-primary"
+                        <a href="dashboard.php"
                                 <?= (!$tahun_aktif || !$data_guru) ? 'disabled' : ''; ?>>
 
                             Simpan Pelanggaran
-
+</a>
                         </button>
 
                         <a href="dashboard.php"

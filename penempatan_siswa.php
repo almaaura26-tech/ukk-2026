@@ -309,7 +309,7 @@ $hasil = mysqli_query($koneksi, $sql);
                         <table id="tabelPenempatan"
                                class="table table-striped table-bordered table-hover align-middle w-100">
 
-                            <thead class="table-dark">
+                            <head class="table-dark">
                                 <tr>
                                     <th>No</th>
                                     <th>NIS</th>
@@ -322,7 +322,7 @@ $hasil = mysqli_query($koneksi, $sql);
                                     <th>Tanggal Selesai</th>
                                     <th>Status</th>
                                 </tr>
-                            </thead>
+                            </head>
 
                             <tbody>
 

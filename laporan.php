@@ -411,7 +411,7 @@ $hasil = mysqli_stmt_get_result($stmt);
 
                                 <a
                                     href="laporan.php"
-                                    class="btn btn-secondary"
+                                    class="btn btn-danger"
                                 >
                                     Reset
                                 </a>

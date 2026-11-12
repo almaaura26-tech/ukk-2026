@@ -13,7 +13,7 @@ include "config/koneksi.php";
 // Menghitung jumlah data dari database
 function hitungData($koneksi, $tabel)
 {
-    $tabelDiizinkan = ['t_siswa', 't_guru', 't_kelas'];
+    $tabelDiizinkan = ['t_siswa', 't_guru', 't_kelas', 't_wali_kelas', 't_tahun_ajaran', 't_pelanggaran_kategori', 't_pelanggaran'];
 
     if (!in_array($tabel, $tabelDiizinkan, true)) {
         return 0;
@@ -40,6 +40,10 @@ function hitungData($koneksi, $tabel)
 $total_siswa = hitungData($koneksi, 't_siswa');
 $total_guru = hitungData($koneksi, 't_guru');
 $total_kelas = hitungData($koneksi, 't_kelas');
+$total_wali_kelas = hitungData($koneksi, 't_wali_kelas');
+$total_tahun_ajaran = hitungData($koneksi, 't_tahun_ajaran');
+$total_kategori_pelanggaran = hitungData($koneksi, 't_pelanggaran_kategori');
+$total_pelanggaran = hitungData($koneksi, 't_pelanggaran');
 ?>
 
 <!DOCTYPE html>
@@ -146,7 +150,7 @@ $total_kelas = hitungData($koneksi, 't_kelas');
                             <h5 class="card-title">Data Tahun Ajaran</h5>
 
                             <h2>
-                                <?= $total_siswa ?>
+                                <?= $total_tahun_ajaran ?>
                             </h2>
 
                             <a href="kelola_tahun_ajaran.php"
@@ -163,7 +167,7 @@ $total_kelas = hitungData($koneksi, 't_kelas');
                             <h5 class="card-title">Data Wali Kelas</h5>
 
                             <h2>
-                                <?= $total_siswa ?>
+                                <?= $total_wali_kelas ?>
                             </h2>
 
                             <a href="kelola_wali_kelas.php"
@@ -197,7 +201,7 @@ $total_kelas = hitungData($koneksi, 't_kelas');
                             <h5 class="card-title">Kategori pelanggaran</h5>
 
                             <h2>
-                                <?= $total_siswa ?>
+                                <?= $total_kategori_pelanggaran ?>
                             </h2>
 
                             <a href="kelola_pelanggaran_kategori.php"
@@ -214,10 +218,10 @@ $total_kelas = hitungData($koneksi, 't_kelas');
                             <h5 class="card-title">Kategori jenis pelanggaran</h5>
 
                             <h2>
-                                <?= $total_siswa ?>
+                                <?= $total_pelanggaran ?>
                             </h2>
 
-                            <a href="kelola_pelanggaran_kategori.php"
+                            <a href="kelola_jenis_pelanggaran.php"
                                class="btn btn-light btn-sm">
                                 Lihat Data kategori pelanggaran
                             </a>
