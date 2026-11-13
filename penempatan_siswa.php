@@ -56,7 +56,7 @@ $sql = "SELECT
             k.jurusan,
             ks.tanggal_mulai,
             ks.tanggal_selesai,
-            ks.status_aktif
+            s.status_aktif
         FROM t_kelas_siswa ks
         LEFT JOIN t_siswa s ON ks.siswa_id = s.id
         LEFT JOIN t_tahun_ajaran ta ON ks.tahun_ajaran_id = ta.id
@@ -74,6 +74,7 @@ $hasil = mysqli_query($koneksi, $sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Penempatan Siswa</title>
+
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
           rel="stylesheet">
@@ -93,12 +94,10 @@ $hasil = mysqli_query($koneksi, $sql);
         <!-- KONTEN -->
         <main class="col-md-9 col-lg-10 p-4">
 
-            <h1>Penempatan Siswa</h1>
-            <p>Selamat datang di halaman Penempatan Siswa.</p>
-
+            <h1 class="mb-4">Penempatan Siswa</h1>
 
             <div class="mb-3">
-                <a href="dashboard.php" class="btn btn-primary">
+                <a href="dashboard.php" class="btn btn-secondary">
                     Kembali ke Dashboard
                 </a>
             </div>
@@ -304,12 +303,20 @@ $hasil = mysqli_query($koneksi, $sql);
             </div>
 
             <!-- TABEL DATA PENEMPATAN -->
-            
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+                    <h5 class="mb-0">Data Penempatan Siswa</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
 
                         <table id="tabelPenempatan"
                                class="table table-striped table-bordered table-hover align-middle w-100">
 
-                            <head class="table-dark">
+                            <thead class="table-dark">
                                 <tr>
                                     <th>No</th>
                                     <th>NIS</th>
@@ -322,7 +329,7 @@ $hasil = mysqli_query($koneksi, $sql);
                                     <th>Tanggal Selesai</th>
                                     <th>Status</th>
                                 </tr>
-                            </head>
+                            </thead>
 
                             <tbody>
 

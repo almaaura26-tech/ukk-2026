@@ -214,18 +214,7 @@ $hasil = mysqli_query($koneksi, $sql);
                     Silakan aktifkan tahun ajaran terlebih dahulu.
                 </div>
 
-            <?php } ?>
-
-            <!-- CEK GURU -->
-            <?php if (!$data_guru) { ?>
-
-                <div class="alert alert-danger">
-                    Akun yang sedang login belum terhubung dengan
-                    data guru atau status guru tidak aktif.
-                </div>
-
-            <?php } ?>
-
+        
             <!-- FORM CATAT PELANGGARAN -->
             <div class="card mb-4">
 
