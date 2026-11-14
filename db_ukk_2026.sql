@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Nov 2026 pada 05.18
+-- Waktu pembuatan: 14 Nov 2026 pada 08.03
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -195,7 +195,8 @@ INSERT INTO `t_kelas_siswa` (`id`, `siswa_id`, `tahun_ajaran_id`, `kelas_id`, `t
 (47, 47, 2, 2, '2026-07-01', '2027-06-30', 1, '2026-07-01 01:00:00', '2026-07-01 01:00:00'),
 (48, 48, 2, 2, '2026-07-01', '2027-06-30', 1, '2026-07-01 01:00:00', '2026-07-01 01:00:00'),
 (49, 49, 2, 2, '2026-07-01', '2027-06-30', 1, '2026-07-01 01:00:00', '2026-07-01 01:00:00'),
-(50, 50, 2, 2, '2026-07-01', '2027-06-30', 1, '2026-07-01 01:00:00', '2026-07-01 01:00:00');
+(50, 50, 2, 2, '2026-07-01', '2027-06-30', 1, '2026-07-01 01:00:00', '2026-07-01 01:00:00'),
+(51, 51, 2, 1, '2026-11-09', '2027-11-14', 1, '2026-11-14 01:42:44', '2026-11-14 01:42:44');
 
 -- --------------------------------------------------------
 
@@ -253,7 +254,7 @@ CREATE TABLE `t_pelanggaran_kategori` (
 --
 
 INSERT INTO `t_pelanggaran_kategori` (`id`, `nama`, `deskripsi`, `status_aktif`, `created_at`, `updated_at`) VALUES
-(1, 'Kedisiplinan', 'Pelanggaran terkait tata tertib dan kedisiplinan', 1, '2026-07-01 01:00:00', '2026-07-01 01:00:00'),
+(1, 'Kedisiplinan', 'Pelanggaran terkait tata tertib dan kedisiplinan', 1, '2026-07-01 01:00:00', '2026-11-14 05:28:19'),
 (2, 'Kerapian', 'Pelanggaran terkait seragam, rambut, dan atribut', 1, '2026-07-01 01:00:00', '2026-07-01 01:00:00'),
 (3, 'Kehadiran', 'Pelanggaran terkait kehadiran dan keterlambatan', 1, '2026-07-01 01:00:00', '2026-07-01 01:00:00'),
 (4, 'Ketertiban', 'Pelanggaran terkait ketertiban di kelas dan lingkungan sekolah', 1, '2026-07-01 01:00:00', '2026-07-01 01:00:00'),
@@ -303,7 +304,11 @@ INSERT INTO `t_pelanggaran_siswa` (`id`, `tahun_ajaran_id`, `siswa_id`, `nama_si
 (9, 2, 34, 'Muhammad Adnan Syaeful Islami', 2, 'XII RPL 2', 8, 'Membuat gaduh di kelas', 4, 14, 'Drs. Muhamad Ali', '2026-09-09', 'Pencatatan pelanggaran siswa', 3, 'Teguran lisan', 'tercatat', '2026-07-01 01:00:00', '2026-07-01 01:00:00'),
 (10, 2, 38, 'Puspita Dewi', 2, 'XII RPL 2', 9, 'Membuang sampah sembarangan', 4, 55, 'Irvan Rizal, S.Pd', '2026-10-13', 'Pencatatan pelanggaran siswa', 2, 'Teguran lisan', 'tercatat', '2026-07-01 01:00:00', '2026-07-01 01:00:00'),
 (11, 2, 36, 'Nadia Zulfa Soraya', 2, 'XII RPL 2', 5, 'Rambut tidak sesuai aturan', 2, 15, 'Helmi Ali Akbar, S.Pd.I', '2026-10-02', 'Pencatatan pelanggaran siswa', 5, 'Pembinaan oleh wali kelas', 'tercatat', '2026-07-01 01:00:00', '2026-07-01 01:00:00'),
-(12, 2, 9, 'Ilma Najya', 1, 'XII RPL 1', 7, 'Tidak masuk tanpa keterangan', 3, 6, 'Uca Musa Yusenda, S.Pd', '2026-10-24', 'Pencatatan pelanggaran siswa', 10, 'Pemanggilan siswa', 'diproses', '2026-07-01 01:00:00', '2026-07-01 01:00:00');
+(12, 2, 9, 'Ilma Najya', 1, 'XII RPL 1', 7, 'Tidak masuk tanpa keterangan', 3, 6, 'Uca Musa Yusenda, S.Pd', '2026-10-24', 'Pencatatan pelanggaran siswa', 10, 'Pemanggilan siswa', 'diproses', '2026-07-01 01:00:00', '2026-07-01 01:00:00'),
+(16, 2, 2, 'Alisa Ramadhani', 1, 'XII RPL 1', 8, 'Membuat gaduh di kelas', 4, 28, 'Ari Sandriana, S.Kom', '2026-10-14', '......', 3, '', 'belum', '2026-11-14 02:53:55', '2026-11-14 02:53:55'),
+(17, 2, 2, 'Alisa Ramadhani', 1, 'XII RPL 1', 1, 'Meninggalkan kelas tanpa izin', 1, 28, 'Ari Sandriana, S.Kom', '2026-11-02', 'teguran lisan', 5, '', 'belum', '2026-11-14 02:56:09', '2026-11-14 02:56:09'),
+(18, 2, 1, 'Alfin Rahadian', 1, 'XII RPL 1', 8, 'Membuat gaduh di kelas', 4, 28, 'Ari Sandriana, S.Kom', '2026-11-23', 'teguran lisan', 3, 'pemanggilan siswa', 'belum', '2026-11-14 02:57:56', '2026-11-14 02:57:56'),
+(19, 2, 52, 'abdul', 1, 'XII RPL 1', 9, 'Membuang sampah sembarangan', 4, 28, 'Ari Sandriana, S.Kom', '2026-11-16', '.....', 2, 'aaaa', 'belum', '2026-11-14 03:17:43', '2026-11-14 03:17:43');
 
 -- --------------------------------------------------------
 
@@ -378,7 +383,10 @@ INSERT INTO `t_siswa` (`id`, `nis`, `nisn`, `nama`, `jenis_kelamin`, `tanggal_la
 (47, '102410565', '0002387473', 'Sherly Satriani', 'P', '2008-11-28', 'Jl. RE Martadinata No. 42, Tasikmalaya', 1, '2026-07-01 01:00:00', '2026-07-01 01:00:00'),
 (48, '102410566', '0084579966', 'Sofi Nurjanah', 'P', '2008-08-17', 'Jl. RE Martadinata No. 80, Tasikmalaya', 1, '2026-07-01 01:00:00', '2026-07-01 01:00:00'),
 (49, '102410567', '0001529160', 'Suraiya Salsabila Azzahra', 'P', '2009-02-18', 'Jl. Dr. Soekardjo No. 69, Tasikmalaya', 1, '2026-07-01 01:00:00', '2026-07-01 01:00:00'),
-(50, '102410568', '0027698636', 'Toni Antonio', 'L', '2008-03-11', 'Jl. Dr. Soekardjo No. 60, Tasikmalaya', 1, '2026-07-01 01:00:00', '2026-07-01 01:00:00');
+(50, '102410568', '0027698636', 'Toni Antonio', 'L', '2008-03-11', 'Jl. Dr. Soekardjo No. 60, Tasikmalaya', 1, '2026-07-01 01:00:00', '2026-07-01 01:00:00'),
+(51, '3244532211', '4321215657', 'ahmad', 'L', '2009-05-14', '..........', 1, '2026-11-14 01:42:02', '2026-11-14 01:42:02'),
+(52, '5342314534', '5242531432', 'abdul', 'L', '2009-06-14', '.....', 1, '2026-11-14 02:49:15', '2026-11-14 02:49:15'),
+(53, '1353443223', '6556543231', 'ahmad', 'L', '2018-06-14', '.......', 1, '2026-11-14 05:58:54', '2026-11-14 05:58:54');
 
 -- --------------------------------------------------------
 
@@ -509,7 +517,7 @@ CREATE TABLE `t_wali_kelas` (
 
 INSERT INTO `t_wali_kelas` (`id`, `tahun_ajaran_id`, `kelas_id`, `guru_id`, `tanggal_mulai`, `tanggal_selesai`, `status_aktif`, `created_at`, `updated_at`) VALUES
 (1, 2, 1, 28, '2026-07-01', '2027-06-30', 1, '2026-07-01 01:00:00', '2026-07-01 01:00:00'),
-(2, 2, 2, 32, '2026-07-01', '2027-06-30', 1, '2026-07-01 01:00:00', '2026-07-01 01:00:00');
+(2, 2, 2, 32, '2026-07-01', '2027-06-22', 0, '2026-07-01 01:00:00', '2026-11-14 01:48:26');
 
 --
 -- Indexes for dumped tables
@@ -609,7 +617,7 @@ ALTER TABLE `t_kelas`
 -- AUTO_INCREMENT untuk tabel `t_kelas_siswa`
 --
 ALTER TABLE `t_kelas_siswa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_pelanggaran`
@@ -627,13 +635,13 @@ ALTER TABLE `t_pelanggaran_kategori`
 -- AUTO_INCREMENT untuk tabel `t_pelanggaran_siswa`
 --
 ALTER TABLE `t_pelanggaran_siswa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_siswa`
 --
 ALTER TABLE `t_siswa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_tahun_ajaran`
@@ -645,7 +653,7 @@ ALTER TABLE `t_tahun_ajaran`
 -- AUTO_INCREMENT untuk tabel `t_users`
 --
 ALTER TABLE `t_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_wali_kelas`
