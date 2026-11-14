@@ -4,8 +4,11 @@
 include 'includes/cek_session.php';
 include 'config/koneksi.php';
 
-// Ambil siswa aktif yang BELUM ditempatkan
-// pada tahun ajaran yang sedang aktif
+// ========================================
+// 1. AMBIL SISWA AKTIF YANG BELUM DITEMPATKAN
+// PADA TAHUN AJARAN AKTIF
+// ========================================
+
 $siswa = mysqli_query(
     $koneksi,
     "SELECT s.id, s.nis, s.nama
@@ -27,7 +30,10 @@ $siswa = mysqli_query(
      ORDER BY s.nama ASC"
 );
 
-// Ambil hanya tahun ajaran yang aktif
+// ========================================
+// 2. AMBIL TAHUN AJARAN AKTIF
+// ========================================
+
 $tahun = mysqli_query(
     $koneksi,
     "SELECT id, nama
@@ -36,7 +42,10 @@ $tahun = mysqli_query(
      ORDER BY id DESC"
 );
 
-// Ambil daftar kelas aktif
+// ========================================
+// 3. AMBIL DAFTAR KELAS AKTIF
+// ========================================
+
 $kelas = mysqli_query(
     $koneksi,
     "SELECT id, nama, tingkat, jurusan
@@ -45,7 +54,10 @@ $kelas = mysqli_query(
      ORDER BY nama ASC"
 );
 
-// Ambil data penempatan siswa
+// ========================================
+// 4. AMBIL DATA PENEMPATAN SISWA
+// ========================================
+
 $sql = "SELECT
             ks.id,
             s.nis,
@@ -56,11 +68,14 @@ $sql = "SELECT
             k.jurusan,
             ks.tanggal_mulai,
             ks.tanggal_selesai,
-            s.status_aktif
+            ks.status_aktif
         FROM t_kelas_siswa ks
-        LEFT JOIN t_siswa s ON ks.siswa_id = s.id
-        LEFT JOIN t_tahun_ajaran ta ON ks.tahun_ajaran_id = ta.id
-        LEFT JOIN t_kelas k ON ks.kelas_id = k.id
+        LEFT JOIN t_siswa s
+            ON ks.siswa_id = s.id
+        LEFT JOIN t_tahun_ajaran ta
+            ON ks.tahun_ajaran_id = ta.id
+        LEFT JOIN t_kelas k
+            ON ks.kelas_id = k.id
         ORDER BY ks.id DESC";
 
 $hasil = mysqli_query($koneksi, $sql);
@@ -79,6 +94,10 @@ $hasil = mysqli_query($koneksi, $sql);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
           rel="stylesheet">
 
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+          rel="stylesheet">
+
     <!-- DataTables Bootstrap 5 -->
     <link href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.min.css"
           rel="stylesheet">
@@ -94,10 +113,12 @@ $hasil = mysqli_query($koneksi, $sql);
         <!-- KONTEN -->
         <main class="col-md-9 col-lg-10 p-4">
 
-            <h1 class="mb-4">Penempatan Siswa</h1>
+            <h1 class="mb-2">Penempatan Siswa</h1>
+             <p>Selamat datang di halaman Penempatan Siswa.</p>
+
 
             <div class="mb-3">
-                <a href="dashboard.php" class="btn btn-secondary">
+                <a href="dashboard.php" class="btn btn-primary">
                     Kembali ke Dashboard
                 </a>
             </div>
@@ -139,6 +160,7 @@ $hasil = mysqli_query($koneksi, $sql);
 
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0">Form Penempatan Siswa</h5>
+        
                 </div>
 
                 <div class="card-body">
@@ -183,6 +205,7 @@ $hasil = mysqli_query($koneksi, $sql);
                                 </select>
 
                             </div>
+
                             <!-- PILIH TAHUN AJARAN -->
                             <div class="col-md-6 mb-3">
 
@@ -305,7 +328,7 @@ $hasil = mysqli_query($koneksi, $sql);
             <!-- TABEL DATA PENEMPATAN -->
             <div class="card shadow-sm">
 
-                <div class="card-header">
+                <div class="card-header bg-dark text-white">
                     <h5 class="mb-0">Data Penempatan Siswa</h5>
                 </div>
 
@@ -328,76 +351,90 @@ $hasil = mysqli_query($koneksi, $sql);
                                     <th>Tanggal Mulai</th>
                                     <th>Tanggal Selesai</th>
                                     <th>Status</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
 
                             <tbody>
 
-                            <?php
-                            $no = 1;
+                                <?php while ($row = mysqli_fetch_assoc($hasil)) { ?>
 
-                            while ($row = mysqli_fetch_assoc($hasil)) {
-                            ?>
+                                    <tr>
 
-                                <tr>
+                                        <td></td>
 
-                                    <td>
-                                        <?= $no++ ?>
-                                    </td>
+                                        <td>
+                                            <?= htmlspecialchars($row['nis'] ?? '-') ?>
+                                        </td>
 
-                                    <td>
-                                        <?= htmlspecialchars($row['nis'] ?? '-') ?>
-                                    </td>
+                                        <td>
+                                            <?= htmlspecialchars($row['nama_siswa'] ?? '-') ?>
+                                        </td>
 
-                                    <td>
-                                        <?= htmlspecialchars($row['nama_siswa'] ?? '-') ?>
-                                    </td>
+                                        <td>
+                                            <?= htmlspecialchars($row['tahun_ajaran'] ?? '-') ?>
+                                        </td>
 
-                                    <td>
-                                        <?= htmlspecialchars($row['tahun_ajaran'] ?? '-') ?>
-                                    </td>
+                                        <td>
+                                            <?= htmlspecialchars($row['nama_kelas'] ?? '-') ?>
+                                        </td>
 
-                                    <td>
-                                        <?= htmlspecialchars($row['nama_kelas'] ?? '-') ?>
-                                    </td>
+                                        <td>
+                                            <?= htmlspecialchars($row['tingkat'] ?? '-') ?>
+                                        </td>
 
-                                    <td>
-                                        <?= htmlspecialchars($row['tingkat'] ?? '-') ?>
-                                    </td>
+                                        <td>
+                                            <?= htmlspecialchars($row['jurusan'] ?? '-') ?>
+                                        </td>
 
-                                    <td>
-                                        <?= htmlspecialchars($row['jurusan'] ?? '-') ?>
-                                    </td>
+                                        <td>
+                                            <?= htmlspecialchars($row['tanggal_mulai'] ?? '-') ?>
+                                        </td>
 
-                                    <td>
-                                        <?= htmlspecialchars($row['tanggal_mulai'] ?? '-') ?>
-                                    </td>
+                                        <td>
+                                            <?= htmlspecialchars($row['tanggal_selesai'] ?? '-') ?>
+                                        </td>
 
-                                    <td>
-                                        <?= htmlspecialchars($row['tanggal_selesai'] ?? '-') ?>
-                                    </td>
+                                        <!-- STATUS -->
+                                        <td>
+                                            <?php if ((int) $row['status_aktif'] === 1) { ?>
 
-                                    <td>
+                                                <span class="badge bg-success">
+                                                    Aktif
+                                                </span>
 
-                                        <?php if ($row['status_aktif'] == 1) { ?>
+                                            <?php } else { ?>
 
-                                            <span class="badge bg-success">
-                                                Aktif
-                                            </span>
+                                                <span class="badge bg-danger">
+                                                    Tidak Aktif
+                                                </span>
 
-                                        <?php } else { ?>
+                                            <?php } ?>
+                                        </td>
 
-                                            <span class="badge bg-danger">
-                                                Tidak Aktif
-                                            </span>
+                                        <!-- AKSI -->
+                                        
+                                        <td>
+                                            <div class="d-flex gap-2">
 
-                                        <?php } ?>
+                                                <a href="edit_penempatan_siswa.php?id=<?= (int) $row['id']; ?>"
+                                                class="btn btn-primary btn-sm">
+                                                    Edit
+                                                </a>
 
-                                    </td>
+                                                <a href="hapus_penempatan_siswa.php?id=<?= (int) $row['id']; ?>"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Yakin ingin menghapus data penempatan siswa ini?');">
+                                                    Hapus
+                                                </a>
 
-                                </tr>
+                                            </div>
+                                        </td>
 
-                            <?php } ?>
+
+                                    </tr>
+
+                                <?php } ?>
 
                             </tbody>
 
@@ -424,7 +461,7 @@ $hasil = mysqli_query($koneksi, $sql);
 <!-- DataTables Bootstrap 5 -->
 <script src="https://cdn.datatables.net/2.3.4/js/dataTables.bootstrap5.min.js"></script>
 
-<!-- Inisialisasi DataTables -->
+<!-- INISIALISASI DATATABLES -->
 <script>
 $(document).ready(function () {
 
@@ -451,7 +488,25 @@ $(document).ready(function () {
 
         lengthMenu: [5, 10, 25, 50, 100],
 
-        order: [[0, 'asc']]
+        order: [[2, 'asc']],
+
+        columnDefs: [
+            {
+                targets: [0, 10],
+                orderable: false,
+                searchable: false
+            }
+        ],
+
+        drawCallback: function () {
+
+            var api = this.api();
+
+            api.column(0, { page: 'current' }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1 + api.page.info().start;
+            });
+
+        }
 
     });
 

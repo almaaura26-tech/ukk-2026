@@ -132,7 +132,7 @@ $tahun = mysqli_query($koneksi, "
                             Simpan Penempatan
                         </button>
 
-                        <a href="penempatan_siswa.php" class="btn btn-secondary">
+                        <a href="penempatan_siswa.php" class="btn btn-danger">
                             Kembali
                         </a>
 

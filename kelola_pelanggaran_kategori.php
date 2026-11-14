@@ -55,8 +55,7 @@ if (!$hasil) {
                 </a>
             </div>
 
-            <div class="card shadow-sm">
-                <div class="card-body">
+          
 
                     <div class="table-responsive">
                         <table id="tabelKategori"

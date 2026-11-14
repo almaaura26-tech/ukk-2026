@@ -99,7 +99,7 @@ if (!$hasil) {
             </p>
 
             <div class="mb-3">
-                <a href="dashboard.php" class="btn btn-secondary">
+                <a href="dashboard.php" class="btn btn-">
                     Kembali ke Dashboard
                 </a>
             </div>
