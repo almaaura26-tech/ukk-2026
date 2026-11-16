@@ -93,7 +93,7 @@ $jumlah = mysqli_num_rows($query);
                     </p>
                 </div>
 
-                <a href="dashboard.php" class="btn btn-secondary">
+                <a href="dashboard.php" class="btn btn-primary">
                     Kembali ke Dashboard
                 </a>
             </div>
@@ -158,7 +158,7 @@ $jumlah = mysqli_num_rows($query);
                                     Cari
                                 </button>
 
-                                <a href="riwayat.php" class="btn btn-secondary">
+                                <a href="riwayat.php" class="btn btn-danger">
                                     Reset
                                 </a>
                             </div>

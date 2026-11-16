@@ -116,7 +116,7 @@ $hasil = mysqli_query($koneksi, $sql);
             <h1 class="mb-4">Penempatan Siswa</h1>
 
             <div class="mb-3">
-                <a href="dashboard.php" class="btn btn-secondary">
+                <a href="dashboard.php" class="btn btn-primary">
                     Kembali ke Dashboard
                 </a>
             </div>
@@ -415,7 +415,7 @@ $hasil = mysqli_query($koneksi, $sql);
                                             <div class="d-flex gap-2">
 
                                                 <a href="edit_penempatan_siswa.php?id=<?= (int) $row['id']; ?>"
-                                                class="btn btn-warning btn-sm">
+                                                class="btn btn-primary btn-sm">
                                                     Edit
                                                 </a>
 
